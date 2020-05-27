@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import { useRoutes } from "hookrouter";
 
 import { Navbar } from "../Navbar/Navbar";
 import { Chart } from "../Chart/Chart";
+import { Game } from "../Game/Game";
+import { About } from "../About/About";
 
 const App = () => {
 	const [topTracks, setTopTracks] = useState([]);
@@ -35,12 +38,22 @@ const App = () => {
 
 	const addFavoriteSong = () => {};
 
+	const routes = {
+		"/play/:artist/:title": ({ artist, title }) => (
+			<Game artist={artist} title={title} />
+		),
+		"/play": () => (
+			<Chart songList={topTracks} addFavoriteSong={addFavoriteSong} />
+		),
+		"/": () => <About />,
+	};
+
+	const match = useRoutes(routes);
+
 	return (
 		<div className="App">
 			<Navbar />
-			<div className="wrapper">
-				<Chart songList={topTracks} addFavoriteSong={addFavoriteSong} />
-			</div>
+			<div className="wrapper">{match || "not found"}</div>
 		</div>
 	);
 };
