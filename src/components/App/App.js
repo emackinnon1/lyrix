@@ -23,31 +23,23 @@ const App = () => {
 			return {
 				title,
 				artist,
+				favorite: false,
 			};
 		});
 		setTopTracks(musicInfo);
-		console.log(topTracks);
 	};
 
 	useEffect(() => {
 		getData(lastFmUrl);
 	}, []);
 
-	const trackList = topTracks.map((track) => {
-		return (
-			<div className="">
-				<p>
-					{track.artist}-{track.title}
-				</p>
-			</div>
-		);
-	});
+	const addFavoriteSong = () => {};
 
 	return (
 		<div className="App">
 			<Navbar />
 			<div className="wrapper">
-				<Chart songList={topTracks} />
+				<Chart songList={topTracks} addFavoriteSong={addFavoriteSong} />
 			</div>
 		</div>
 	);
