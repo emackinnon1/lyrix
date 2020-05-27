@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 import { Navbar } from "../Navbar/Navbar";
+import { Chart } from "../Chart/Chart";
 
 const App = () => {
 	const [topTracks, setTopTracks] = useState([]);
@@ -12,17 +13,13 @@ const App = () => {
 	const getData = async (url) => {
 		const response = await fetch(url);
 		const data = await response.json();
-		// console.log(data);
-		// getArtistsAndTitles(data);
-		setTopTracks(data);
-		console.log(data);
+		await getArtistsAndTitles(data.tracks.track);
 	};
 
 	const getArtistsAndTitles = async (songList) => {
-		console.log(songList);
-		const musicInfo = songList.tracks.track.map(async (song) => {
-			const title = await song.name;
-			const artist = await song.artist.name;
+		const musicInfo = songList.map((song) => {
+			const title = song.name;
+			const artist = song.artist.name;
 			return {
 				title,
 				artist,
@@ -36,9 +33,22 @@ const App = () => {
 		getData(lastFmUrl);
 	}, []);
 
+	const trackList = topTracks.map((track) => {
+		return (
+			<div className="">
+				<p>
+					{track.artist}-{track.title}
+				</p>
+			</div>
+		);
+	});
+
 	return (
 		<div className="App">
 			<Navbar />
+			<div className="wrapper">
+				<Chart songList={topTracks} />
+			</div>
 		</div>
 	);
 };
