@@ -1,0 +1,22 @@
+.navlink-holder {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.navlink {
+	border-bottom: 5px solid #2e3532;
+	color: white;
+	text-decoration: none;
+	margin: 20px;
+	padding: 5px;
+}
+
+.title {
+	color: #5efc8d;
+	font-size: 74px;
+}
+
+.active {
+	border-bottom: 5px solid #5efc8d;
+}
