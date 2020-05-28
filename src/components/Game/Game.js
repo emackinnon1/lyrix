@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import GameCard from "../GameCard/GameCard"
 
 export const Game = ({ artist, title }) => {
 	const [lyrics, setLyrics] = useState("");
@@ -33,7 +34,6 @@ export const Game = ({ artist, title }) => {
 		setLyricsCount(lyricsCount + 2)
 		const currentLyrics = [finalLyrics[lyricsCount],finalLyrics[lyricsCount + 1]]
 		setCurrentLyrics(currentLyrics)
-		console.log(currentLyrics)
 		setIsLoading(false)
 		setIsPlaying(true);
 	}
@@ -44,17 +44,10 @@ export const Game = ({ artist, title }) => {
 	  	setLyricsData(data)
 	}
 
-	const checkInputs = () => {
-		sortCurrentLyrics(lyrics)
-
+	const updateCount = () => {
+		setLyricsCount(lyricsCount + 2);
 	}
 
-	// displayLyrics = (currentLyrics) => {
-	// 	const firstLine = currentLyrics[0]
-	
-	
-
-	// }
 	const handleChange = (e) => {
 		const guess = e.target.value.toUpperCase();
 		const inputId = e.target.id
@@ -62,34 +55,34 @@ export const Game = ({ artist, title }) => {
 		console.log('guesses state', guesses)
 	}
 
-	const displayLyrics = (lyrics, index) => {
-		let loaded = ('Loading...');
-		const userAnswer = <input type='text' className='input-box' placeholder='Your Answer Here'>	</input>
+	// const displayLyrics = (lyrics, index) => {
+	// 	let loaded = ('Loading...');
+	// 	const userAnswer = <input type='text' className='input-box' placeholder='Your Answer Here'>	</input>
 
-		if(!lyrics) {
-			return
-		}
+	// 	if(!lyrics) {
+	// 		return
+	// 	}
 	
-		if (!isLoading && currentLyrics.length > 0) {
-			const gameLyrics = lyrics.split(' ');
-			const wordToReplace = Math.floor(Math.random() * gameLyrics.length);
-			console.log('wtr', wordToReplace)
-			const correctWord = gameLyrics[wordToReplace];
+	// 	if (!isLoading && currentLyrics.length > 0) {
+	// 		const gameLyrics = lyrics.split(' ');
+	// 		const wordToReplace = Math.floor(Math.random() * gameLyrics.length);
+	// 		console.log('wtr', wordToReplace)
+	// 		const correctWord = gameLyrics[wordToReplace];
 		
-			console.log('cw', correctWord);
-			// setAnswers({...answers, ['answer'+index]: correctWord});
-			const firstHalf = gameLyrics.splice(0, wordToReplace);
-			const secondHalf = gameLyrics.splice(1);
+	// 		console.log('cw', correctWord);
+	// 		// setAnswers({...answers, ['answer'+index]: correctWord});
+	// 		const firstHalf = gameLyrics.splice(0, wordToReplace);
+	// 		const secondHalf = gameLyrics.splice(1);
 	
 
-			loaded = <div>
-									<p>{firstHalf.join(' ')}
-									<input type='text' className='input-box' id={index} onChange={(e)=> handleChange(e)} placeholder='Your Answer Here' />
-									{secondHalf.join(' ')}</p>
-							</div>
-		}
-		return loaded
-	}
+	// 		loaded = <div>
+	// 								<p>{firstHalf.join(' ')}
+	// 								<input type='text' className='input-box' id={index} onChange={(e)=> handleChange(e)} placeholder='Your Answer Here' />
+	// 								{secondHalf.join(' ')}</p>
+	// 						</div>
+	// 	}
+	// 	return loaded
+	// }
 
 	return (
 		<div className='game-container'>
@@ -99,12 +92,10 @@ export const Game = ({ artist, title }) => {
 				</p>
 			</div>
 			<div className='lyrics-main'>
-
+				{currentLyrics ? <GameCard lyrics={currentLyrics} updateCount={updateCount}/> : '...loading'}
+				
 				{/* {displayLyrics(currentLyrics[0], 0)}
 				{displayLyrics(currentLyrics[1], 1)} */}
-			</div>
-			<div className='check-answers'>
-				<button onClick={() => checkInputs()} className='next-btn'>NEXT</button>
 			</div>
 		</div>
 	);
