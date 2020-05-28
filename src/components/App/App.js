@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import { useRoutes } from "hookrouter";
 
 import { Navbar } from "../Navbar/Navbar";
+import { Chart } from "../Chart/Chart";
+import { Game } from "../Game/Game";
+import { About } from "../About/About";
 
 const App = () => {
 	const [topTracks, setTopTracks] = useState([]);
@@ -12,33 +16,44 @@ const App = () => {
 	const getData = async (url) => {
 		const response = await fetch(url);
 		const data = await response.json();
-		// console.log(data);
-		// getArtistsAndTitles(data);
-		setTopTracks(data);
-		console.log(data);
+		await getArtistsAndTitles(data.tracks.track);
 	};
 
 	const getArtistsAndTitles = async (songList) => {
-		console.log(songList);
-		const musicInfo = songList.tracks.track.map(async (song) => {
-			const title = await song.name;
-			const artist = await song.artist.name;
+		const musicInfo = songList.map((song) => {
+			const title = song.name;
+			const artist = song.artist.name;
 			return {
 				title,
 				artist,
+				favorite: false,
 			};
 		});
 		setTopTracks(musicInfo);
-		console.log(topTracks);
 	};
 
 	useEffect(() => {
 		getData(lastFmUrl);
 	}, []);
 
+	const addFavoriteSong = () => {};
+
+	const routes = {
+		"/play/:artist/:title": ({ artist, title }) => (
+			<Game artist={artist} title={title} />
+		),
+		"/play": () => (
+			<Chart songList={topTracks} addFavoriteSong={addFavoriteSong} />
+		),
+		"/": () => <About />,
+	};
+
+	const match = useRoutes(routes);
+
 	return (
 		<div className="App">
 			<Navbar />
+			<div className="wrapper">{match || "not found"}</div>
 		</div>
 	);
 };
