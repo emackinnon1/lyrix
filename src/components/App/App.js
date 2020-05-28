@@ -19,7 +19,7 @@ const App = () => {
 		await getArtistsAndTitles(data.tracks.track);
 	};
 
-	const getArtistsAndTitles = async (songList) => {
+	const getArtistsAndTitles = (songList) => {
 		const musicInfo = songList.map((song) => {
 			const title = song.name;
 			const artist = song.artist.name;
@@ -32,23 +32,24 @@ const App = () => {
 		setTopTracks(musicInfo);
 	};
 
-	useEffect(() => {
-		getData(lastFmUrl);
-	}, []);
-
 	const addFavoriteSong = () => {};
 
 	const routes = {
-		"/play/:artist/:title": ({ artist, title }) => (
-			<Game artist={artist} title={title} />
-		),
+		"/": () => <About />,
 		"/play": () => (
 			<Chart songList={topTracks} addFavoriteSong={addFavoriteSong} />
 		),
-		"/": () => <About />,
-	};
+		"/play/:artist/:title": ({ artist, title }) => (
+			<Game artist={artist} title={title} />
+		)
+	};  
+
+	useEffect(() => {
+		getData(lastFmUrl);
+	}, [routes]);
 
 	const match = useRoutes(routes);
+	
 
 	return (
 		<div className="App">

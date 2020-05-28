@@ -3,8 +3,9 @@ import { A, usePath } from "hookrouter";
 import "./Navbar.css";
 
 export const Navbar = () => {
+	
 	const path = usePath();
-	const activeLink = `${path}` ? "active" : "none";
+	let activeLink = path ? "active" : "none";
 
 	return (
 		<div className="navbar">

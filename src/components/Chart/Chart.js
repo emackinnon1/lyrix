@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Chart.css";
 import { AiFillStar } from "react-icons/ai";
 import { A } from "hookrouter";
@@ -7,6 +7,8 @@ export const Chart = ({ songList, chartTitle }) => {
 	const hyphenate = (words) => {
 		return words.split(" ").join("-");
 	};
+
+	
 
 	const trackList = songList.map((song, i) => {
 		return (
