@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 export const Game = ({ artist, title }) => {
 	const [lyrics, setLyrics] = useState("");
 	const [currentLyrics, setCurrentLyrics] = useState('');
-
+	const [lyricsCount, setLyricsCount] = useState(0);
 	const url = 'https://api.lyrics.ovh/v1/'
 	
 	useEffect(() => {
@@ -14,7 +14,14 @@ export const Game = ({ artist, title }) => {
 		const sortedLyrics = data.lyrics.split('\n')
 		const finalLyrics = sortedLyrics.filter(lyric => lyric !== '')
 		setLyrics(finalLyrics)
-		console.log(finalLyrics)
+		sortCurrentLyrics(finalLyrics)
+	}
+
+	const sortCurrentLyrics = (finalLyrics) => {
+		setLyricsCount(lyricsCount + 2)
+		const currentLyrics = [finalLyrics[lyricsCount], finalLyrics[lyricsCount + 1]]
+		setCurrentLyrics(currentLyrics)
+		console.log(currentLyrics)
 	}
 
 	const getLyrics = async () => {
@@ -23,6 +30,9 @@ export const Game = ({ artist, title }) => {
 		await setLyricsData(data)
 	}
 
+	const showNextLyrics = () => {
+		sortCurrentLyrics(lyrics)
+	}
 
 	return (
 		<div className='game-container'>
@@ -32,7 +42,10 @@ export const Game = ({ artist, title }) => {
 				</p>
 			</div>
 			<div className='lyrics-main'>
-				<p>{lyrics}</p>
+				<p>{currentLyrics}</p>
+			</div>
+			<div className='check-answers'>
+				<button onClick={() => showNextLyrics()} className='next-btn'>NEXT</button>
 			</div>
 		</div>
 	);
