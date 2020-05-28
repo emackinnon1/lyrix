@@ -5,7 +5,17 @@ export const Game = ({ artist, title }) => {
 	const [currentLyrics, setCurrentLyrics] = useState('');
 	const [lyricsCount, setLyricsCount] = useState(0);
 	const [isLoading, setIsLoading] = useState(true);
-	const [isPlaying, setIsPlaying] = useState(false)
+	const [isPlaying, setIsPlaying] = useState(false);
+	const [score, setScore] = useState(0);
+	const [guesses, setGuesses] = useState({
+		guess0: '',
+		guess1: '',
+	});
+	const [answers, setAnswers] = useState({
+		answer0: '',
+		answer1: '',
+	});
+
 	const url = 'https://api.lyrics.ovh/v1/'
 	
 	useEffect(() => {
@@ -31,7 +41,7 @@ export const Game = ({ artist, title }) => {
 	const getLyrics = async () => {
 		const response = await fetch(url + artist + '/' + title);
 		const data = await response.json();
-	  setLyricsData(data)
+	  	setLyricsData(data)
 	}
 
 	const checkInputs = () => {
@@ -41,11 +51,18 @@ export const Game = ({ artist, title }) => {
 
 	// displayLyrics = (currentLyrics) => {
 	// 	const firstLine = currentLyrics[0]
-		
+	
+	
 
 	// }
+	const handleChange = (e) => {
+		const guess = e.target.value.toUpperCase();
+		const inputId = e.target.id
+		setGuesses({...guesses, ['guess'+inputId]: guess});
+		console.log('guesses state', guesses)
+	}
 
-	const displayLyrics = (lyrics) => {
+	const displayLyrics = (lyrics, index) => {
 		let loaded = ('Loading...');
 		const userAnswer = <input type='text' className='input-box' placeholder='Your Answer Here'>	</input>
 
@@ -54,21 +71,20 @@ export const Game = ({ artist, title }) => {
 		}
 	
 		if (!isLoading && currentLyrics.length > 0) {
-			const wordToReplace = 2;
 			const gameLyrics = lyrics.split(' ');
+			const wordToReplace = Math.floor(Math.random() * gameLyrics.length);
+			console.log('wtr', wordToReplace)
+			const correctWord = gameLyrics[wordToReplace];
+		
+			console.log('cw', correctWord);
+			// setAnswers({...answers, ['answer'+index]: correctWord});
 			const firstHalf = gameLyrics.splice(0, wordToReplace);
 			const secondHalf = gameLyrics.splice(1);
-			const full = `${firstHalf.join(' ')} ${userAnswer} ${secondHalf.join(' ')}`
-			
+	
 
-			console.log('first', firstHalf)
-			console.log('second', secondHalf)
-
-
-		
 			loaded = <div>
 									<p>{firstHalf.join(' ')}
-									<input type='text' className='input-box' placeholder='Your Answer Here' />
+									<input type='text' className='input-box' id={index} onChange={(e)=> handleChange(e)} placeholder='Your Answer Here' />
 									{secondHalf.join(' ')}</p>
 							</div>
 		}
@@ -83,8 +99,9 @@ export const Game = ({ artist, title }) => {
 				</p>
 			</div>
 			<div className='lyrics-main'>
-				{displayLyrics(currentLyrics[0])}
-				{displayLyrics(currentLyrics[1])}
+
+				{/* {displayLyrics(currentLyrics[0], 0)}
+				{displayLyrics(currentLyrics[1], 1)} */}
 			</div>
 			<div className='check-answers'>
 				<button onClick={() => checkInputs()} className='next-btn'>NEXT</button>
