@@ -14,9 +14,10 @@ const App = () => {
 		"http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&limit=10&api_key=ae71028d5b049c13836f15604c505ffa&format=json";
 
 	const getData = async (url) => {
+		console.log('fetch call')
 		const response = await fetch(url);
 		const data = await response.json();
-		await getArtistsAndTitles(data.tracks.track);
+	  getArtistsAndTitles(data.tracks.track);
 	};
 
 	const getArtistsAndTitles = (songList) => {
@@ -46,7 +47,7 @@ const App = () => {
 
 	useEffect(() => {
 		getData(lastFmUrl);
-	}, [routes]);
+	}, []);
 
 	const match = useRoutes(routes);
 	
