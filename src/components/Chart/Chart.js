@@ -8,8 +8,6 @@ export const Chart = ({ songList, chartTitle }) => {
 		return words.split(" ").join("-");
 	};
 
-	
-
 	const trackList = songList.map((song, i) => {
 		return (
 			<div key={i} className="track-info">
