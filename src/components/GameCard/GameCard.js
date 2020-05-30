@@ -2,20 +2,22 @@ import React, { useState, useEffect } from "react";
 import './GameCard.css'
 const GameCard = ({lyrics, updateCount, splitLyrics}) => {
 
-    const [guesses, setGuesses] = useState({});
+    const [guesses, setGuesses] = useState('');
 
     const createLyricLine = () => {
       
         const result = splitLyrics.map(lyric => {
-            let firstHalf = lyric[0][0][0].join(' ')
-            let secondHalf = lyric[0][0][1].join(' ')
+            let firstHalf = lyric[0].splitLine[0].join(' ')
+            let secondHalf = lyric[0].splitLine[1].join(' ')
 
-            return ( <p className='game-txt' key={firstHalf}>
-                        {firstHalf}
-                            <input type='text' className='input-box' key={secondHalf} id={lyric[0][0].missing} onChange={(e) => handleChange(e)} placeholder='...' value={guesses[0]}/>
-                        {secondHalf}
-                     </p>)
-            })
+            return (
+                <p className='game-txt' key={firstHalf}>
+                    {firstHalf}
+                        <input type='text' className='input-box' key={secondHalf} id={lyric[0].missing} onChange={(e) => handleChange(e)} placeholder='...' value={guesses}/>
+                    {secondHalf}
+                 </p>
+            )
+        })
 
         return result
         
@@ -27,19 +29,19 @@ const GameCard = ({lyrics, updateCount, splitLyrics}) => {
 
     const handleChange = (e) => {
         e.preventDefault();
-		setGuesses([e.target.value])
+		setGuesses(e.target.value)
     }
 
     const checkAnswers = (e) => {
         e.preventDefault();
-        let correctAnswer = splitLyrics[0][0].missing
+        let correctAnswer = splitLyrics[0][0].missing.toUpperCase()
 
-        if (correctAnswer == guesses) {
+        if (correctAnswer === guesses.toUpperCase()) {
             alert('correct!')
             updateCount(true);
             setGuesses('')
         } else {
-            alert('wrong!')
+            alert(correctAnswer)
             updateCount(false);
             setGuesses('')
         }

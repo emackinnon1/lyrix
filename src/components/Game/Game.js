@@ -41,7 +41,7 @@ export const Game = ({ artist, title }) => {
 		let firstHalf = gameLyrics.splice(0, wordToReplace);
 		let secondHalf = gameLyrics.splice(1);
 			return {
-				[index]: [firstHalf, secondHalf],
+				['splitLine']: [firstHalf, secondHalf],
 				['missing']: missingWord
 			}
 		})
@@ -70,10 +70,7 @@ export const Game = ({ artist, title }) => {
 				<p className='score'>SCORE: {score}/{lyrics.length}</p>
 			</div>
 			<div className='lyrics-main'>
-				{currentLyrics && splitLyrics ? <GameCard lyrics={currentLyrics} updateCount={updateCount} splitLyrics={splitLyrics}/> : <p class='loading'>..loading</p>}
-				
-				{/* {displayLyrics(currentLyrics[0], 0)}
-				{displayLyrics(currentLyrics[1], 1)} */}
+				{currentLyrics && splitLyrics ? <GameCard lyrics={currentLyrics} updateCount={updateCount} splitLyrics={splitLyrics}/> : <p className='loading'>..loading</p>}
 			</div>
 		</div>
 	);
