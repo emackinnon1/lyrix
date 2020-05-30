@@ -17,6 +17,10 @@
 	font-size: 74px;
 }
 
-.active {
+.navlink-active {
 	border-bottom: 5px solid #5efc8d;
+	color: white;
+	text-decoration: none;
+	margin: 20px;
+	padding: 5px;
 }
