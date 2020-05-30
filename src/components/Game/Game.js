@@ -8,14 +8,7 @@ export const Game = ({ artist, title }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [score, setScore] = useState(0);
-	const [guesses, setGuesses] = useState({
-		guess0: '',
-		guess1: '',
-	});
-	const [answers, setAnswers] = useState({
-		answer0: '',
-		answer1: '',
-	});
+	const [splitLyrics, setSplitLyrics] = useState([]);
 
 	const url = 'https://api.lyrics.ovh/v1/'
 	
@@ -31,58 +24,39 @@ export const Game = ({ artist, title }) => {
 	}
 
 	const sortCurrentLyrics = (finalLyrics) => {
-		setLyricsCount(lyricsCount + 2)
-		const currentLyrics = [finalLyrics[lyricsCount],finalLyrics[lyricsCount + 1]]
+		setLyricsCount(lyricsCount + 1)
+		let currentLyrics = [finalLyrics[lyricsCount]]
 		setCurrentLyrics(currentLyrics)
+
+		generateLines(currentLyrics)
 		setIsLoading(false)
 		setIsPlaying(true);
+	}
+
+	const generateLines = (currentLyrics) => {
+	  const completeLyrics = currentLyrics.map((lyric, index) => {
+		let gameLyrics = lyric.split(' ');
+		let wordToReplace =  Math.floor(Math.random() * gameLyrics.length)
+		let missingWord = gameLyrics[wordToReplace];
+		let firstHalf = gameLyrics.splice(0, wordToReplace);
+		let secondHalf = gameLyrics.splice(1);
+			return {
+				[index]: [firstHalf, secondHalf],
+				['missing']: missingWord
+			}
+		})
+		 setSplitLyrics([completeLyrics])
 	}
 
 	const getLyrics = async () => {
 		const response = await fetch(url + artist + '/' + title);
 		const data = await response.json();
-	  	setLyricsData(data)
+		setLyricsData(data)
 	}
 
 	const updateCount = () => {
-		setLyricsCount(lyricsCount + 2);
+		sortCurrentLyrics(lyrics)
 	}
-
-	const handleChange = (e) => {
-		const guess = e.target.value.toUpperCase();
-		const inputId = e.target.id
-		setGuesses({...guesses, ['guess'+inputId]: guess});
-		console.log('guesses state', guesses)
-	}
-
-	// const displayLyrics = (lyrics, index) => {
-	// 	let loaded = ('Loading...');
-	// 	const userAnswer = <input type='text' className='input-box' placeholder='Your Answer Here'>	</input>
-
-	// 	if(!lyrics) {
-	// 		return
-	// 	}
-	
-	// 	if (!isLoading && currentLyrics.length > 0) {
-	// 		const gameLyrics = lyrics.split(' ');
-	// 		const wordToReplace = Math.floor(Math.random() * gameLyrics.length);
-	// 		console.log('wtr', wordToReplace)
-	// 		const correctWord = gameLyrics[wordToReplace];
-		
-	// 		console.log('cw', correctWord);
-	// 		// setAnswers({...answers, ['answer'+index]: correctWord});
-	// 		const firstHalf = gameLyrics.splice(0, wordToReplace);
-	// 		const secondHalf = gameLyrics.splice(1);
-	
-
-	// 		loaded = <div>
-	// 								<p>{firstHalf.join(' ')}
-	// 								<input type='text' className='input-box' id={index} onChange={(e)=> handleChange(e)} placeholder='Your Answer Here' />
-	// 								{secondHalf.join(' ')}</p>
-	// 						</div>
-	// 	}
-	// 	return loaded
-	// }
 
 	return (
 		<div className='game-container'>
@@ -92,7 +66,7 @@ export const Game = ({ artist, title }) => {
 				</p>
 			</div>
 			<div className='lyrics-main'>
-				{currentLyrics ? <GameCard lyrics={currentLyrics} updateCount={updateCount}/> : '...loading'}
+				{currentLyrics && splitLyrics ? <GameCard lyrics={currentLyrics} updateCount={updateCount} splitLyrics={splitLyrics}/> : '...loading'}
 				
 				{/* {displayLyrics(currentLyrics[0], 0)}
 				{displayLyrics(currentLyrics[1], 1)} */}

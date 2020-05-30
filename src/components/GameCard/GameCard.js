@@ -1,50 +1,52 @@
 import React, { useState, useEffect } from "react";
-
-const GameCard = ({lyrics, updateCount}) => {
+import './GameCard.css'
+const GameCard = ({lyrics, updateCount, splitLyrics}) => {
 
     const [guesses, setGuesses] = useState({});
-    const [wordToReplace, setWordToReplace] = useState(-1);
 
-    const createLyricLine = (line, index) => {
-    const gameLyrics = line.split(' ');
-    
-    const correctWord = gameLyrics[wordToReplace];
-    const firstHalf = gameLyrics.splice(0, wordToReplace);
-    const secondHalf = gameLyrics.splice(1);
-    return (
-        <p key={index}>
-            {firstHalf.join(' ')}
-                <input type='text' className='input-box' key={index} id={index} onChange={(e) => handleChange(e)} placeholder='Your Answer Here' value={guesses}/>
-            {secondHalf.join(' ')}
-        </p>
-    )}
+    const createLyricLine = () => {
+      
+        const result = splitLyrics.map(lyric => {
+            let firstHalf = lyric[0][0][0].join(' ')
+            let secondHalf = lyric[0][0][1].join(' ')
 
-    const checkWordToReplace = () => {
-        if(wordToReplace === -1){ 
-            setWordToReplace(Math.floor(Math.random() * gameLyrics.length));
-        }
+            return ( <p key={firstHalf}>
+                        {firstHalf}
+                            <input type='text' className='input-box' key={secondHalf} id={lyric[0][0].missing} onChange={(e) => handleChange(e)} placeholder='Your Answer Here' value={guesses[0]}/>
+                        {secondHalf}
+                     </p>)
+            })
+
+        return result
+        
     }
+
+    useEffect(() => {
+       
+    }, [lyrics])
 
     const handleChange = (e) => {
         e.preventDefault();
-		setGuesses({index:e.target.value})
-		// setGuesses({...guesses, ['guess'+inputId]: guess});
-		// console.log('guesses state', guesses)
+		setGuesses([e.target.value])
     }
 
     const checkAnswers = (e) => {
         e.preventDefault();
         updateCount();
+        let correctAnswer = splitLyrics[0][0].missing
 
+        if (correctAnswer == guesses) {
+            alert('correct!')
+            setGuesses('')
+        } else {
+            alert('wrong!')
+            setGuesses('')
+        }
     }
-
-    const displayGameData = lyrics.map((line, index)=>{
-        return createLyricLine(line, index)
-    });
 
     return (
     <form onSubmit={(e) => checkAnswers(e)}>
-        {displayGameData}
+        {createLyricLine()}
         <div className='check-answers'>
 				<button type='submit' className='next-btn'>NEXT</button>
 		</div>

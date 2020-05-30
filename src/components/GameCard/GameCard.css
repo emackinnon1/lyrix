@@ -1,0 +1,12 @@
+.input-box { 
+  padding:3px; 
+  border-width:2px; 
+  text-align:center; 
+  font-size:23px; 
+  border-radius:5px; 
+  border-color:#a9ff0a; 
+  border-style:double;  
+} 
+.input-box:focus { 
+  outline:none; 
+} 

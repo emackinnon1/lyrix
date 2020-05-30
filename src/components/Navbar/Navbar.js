@@ -31,7 +31,7 @@ export const Navbar = () => {
 					</A>
 				</h3>
 			</div>
-			<h1 className="title">-Lyrix-</h1>
+			<h1 className="title">-LYRIX-</h1>
 		</div>
 	);
 };
