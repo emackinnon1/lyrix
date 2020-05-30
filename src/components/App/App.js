@@ -6,18 +6,13 @@ import { Navbar } from "../Navbar/Navbar";
 import { Chart } from "../Chart/Chart";
 import { Game } from "../Game/Game";
 import { About } from "../About/About";
+import { getChartData } from "../../apiCalls";
 
 const App = () => {
 	const [topTracks, setTopTracks] = useState([]);
 
 	const lastFmUrl =
 		"http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&limit=10&api_key=ae71028d5b049c13836f15604c505ffa&format=json";
-
-	const getData = async (url) => {
-		const response = await fetch(url);
-		const data = await response.json();
-	  getArtistsAndTitles(data.tracks.track);
-	};
 
 	const getArtistsAndTitles = (songList) => {
 		const musicInfo = songList.map((song) => {
@@ -41,15 +36,19 @@ const App = () => {
 		),
 		"/play/:artist/:title": ({ artist, title }) => (
 			<Game artist={artist} title={title} />
-		)
-	};  
+		),
+	};
 
 	useEffect(() => {
-		getData(lastFmUrl);
+		const fetchData = async () => {
+			const chart = await getChartData(lastFmUrl);
+			getArtistsAndTitles(chart);
+		};
+		fetchData();
 	}, []);
 
 	const match = useRoutes(routes);
-	
+
 	return (
 		<div className="App">
 			<Navbar />
