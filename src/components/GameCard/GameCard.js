@@ -10,9 +10,9 @@ const GameCard = ({lyrics, updateCount, splitLyrics}) => {
             let firstHalf = lyric[0][0][0].join(' ')
             let secondHalf = lyric[0][0][1].join(' ')
 
-            return ( <p key={firstHalf}>
+            return ( <p className='game-txt' key={firstHalf}>
                         {firstHalf}
-                            <input type='text' className='input-box' key={secondHalf} id={lyric[0][0].missing} onChange={(e) => handleChange(e)} placeholder='Your Answer Here' value={guesses[0]}/>
+                            <input type='text' className='input-box' key={secondHalf} id={lyric[0][0].missing} onChange={(e) => handleChange(e)} placeholder='...' value={guesses[0]}/>
                         {secondHalf}
                      </p>)
             })
@@ -32,14 +32,15 @@ const GameCard = ({lyrics, updateCount, splitLyrics}) => {
 
     const checkAnswers = (e) => {
         e.preventDefault();
-        updateCount();
         let correctAnswer = splitLyrics[0][0].missing
 
         if (correctAnswer == guesses) {
             alert('correct!')
+            updateCount(true);
             setGuesses('')
         } else {
             alert('wrong!')
+            updateCount(false);
             setGuesses('')
         }
     }

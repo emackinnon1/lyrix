@@ -1,12 +1,31 @@
 .input-box { 
-  padding:3px; 
-  border-width:2px; 
-  text-align:center; 
-  font-size:23px; 
-  border-radius:5px; 
-  border-color:#a9ff0a; 
-  border-style:double;  
+  padding: 3px; 
+  border-width: 5px; 
+  text-align: center; 
+  font-size: 23px; 
+  border-radius: 5px; 
+	color: #2e3532;
+  border-color: #5efc8d;
+  margin: 10px;
 } 
 .input-box:focus { 
-  outline:none; 
+  outline: none; 
 } 
+
+.next-btn {
+  font-size: 1em;
+  text-align: center;
+	color: #2e3532;
+  border-color: #5efc8d;
+  border-width: 5px;
+  border-radius: 5px;
+  margin-bottom: 5%;
+}
+
+.next-btn:focus {
+
+}
+
+.game-txt {
+  font-size: 23px;
+}

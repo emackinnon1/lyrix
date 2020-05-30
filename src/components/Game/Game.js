@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import GameCard from "../GameCard/GameCard"
+import GameCard from "../GameCard/GameCard";
+import './Game.css'
 
 export const Game = ({ artist, title }) => {
 	const [lyrics, setLyrics] = useState("");
@@ -27,7 +28,6 @@ export const Game = ({ artist, title }) => {
 		setLyricsCount(lyricsCount + 1)
 		let currentLyrics = [finalLyrics[lyricsCount]]
 		setCurrentLyrics(currentLyrics)
-
 		generateLines(currentLyrics)
 		setIsLoading(false)
 		setIsPlaying(true);
@@ -54,19 +54,23 @@ export const Game = ({ artist, title }) => {
 		setLyricsData(data)
 	}
 
-	const updateCount = () => {
+	const updateCount = (isCorrect) => {
 		sortCurrentLyrics(lyrics)
+		if(isCorrect) {
+			setScore(score + 1)
+		} 
 	}
 
 	return (
 		<div className='game-container'>
 			<div className="game">
-				<p>
+				<p className='title-artist'>
 					{artist}, {title}
 				</p>
+				<p className='score'>SCORE: {score}/{lyrics.length}</p>
 			</div>
 			<div className='lyrics-main'>
-				{currentLyrics && splitLyrics ? <GameCard lyrics={currentLyrics} updateCount={updateCount} splitLyrics={splitLyrics}/> : '...loading'}
+				{currentLyrics && splitLyrics ? <GameCard lyrics={currentLyrics} updateCount={updateCount} splitLyrics={splitLyrics}/> : <p class='loading'>..loading</p>}
 				
 				{/* {displayLyrics(currentLyrics[0], 0)}
 				{displayLyrics(currentLyrics[1], 1)} */}
