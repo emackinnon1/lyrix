@@ -18,7 +18,7 @@ export const Game = ({ artist, title }) => {
 		const setData = async () => {
 			const lyricsData = await getLyrics(url, artist, title);
 			!lyricsData && setError(true);
-			error && setLyricsData(lyricsData);
+			lyricsData && setLyricsData(lyricsData);
 		};
 		setData();
 	}, []);
@@ -33,17 +33,17 @@ export const Game = ({ artist, title }) => {
 
 	const updateCurrentLyrics = (finalLyrics) => {
 		setLyricsCount(lyricsCount + 1);
-		let currentLyrics = finalLyrics[lyricsCount];
+		const currentLyrics = finalLyrics[lyricsCount];
 		setCurrentLyrics(currentLyrics);
 		generateLines(currentLyrics);
 	};
 
 	const generateLines = (lyrics) => {
-		let gameLyrics = lyrics.split(" ");
-		let wordToReplace = Math.floor(Math.random() * gameLyrics.length);
-		let missingWord = gameLyrics[wordToReplace];
-		let firstHalf = gameLyrics.splice(0, wordToReplace).join(" ");
-		let secondHalf = gameLyrics.splice(1).join(" ");
+		const gameLyrics = lyrics.split(" ");
+		const wordToReplace = Math.floor(Math.random() * gameLyrics.length);
+		const missingWord = gameLyrics[wordToReplace];
+		const firstHalf = gameLyrics.splice(0, wordToReplace).join(" ");
+		const secondHalf = gameLyrics.splice(1).join(" ");
 		const lineInfo = {
 			splitLine: [firstHalf, secondHalf],
 			missing: missingWord,
@@ -57,7 +57,7 @@ export const Game = ({ artist, title }) => {
 			setScore(score + 1);
 		}
 	};
-
+	console.log("hi" || lyrics);
 	return (
 		<div className="game-container">
 			<div className="game">
@@ -77,7 +77,7 @@ export const Game = ({ artist, title }) => {
 					/>
 				)) || (
 					<p className="loading">
-						{(error && "Please choose another song") || "..loading"}
+						{(error && "Please choose another song") || "...loading"}
 					</p>
 				)}
 			</div>

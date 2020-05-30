@@ -14,12 +14,6 @@ const App = () => {
 	const lastFmUrl =
 		"http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&limit=10&api_key=ae71028d5b049c13836f15604c505ffa&format=json";
 
-	// const getData = async (url) => {
-	// 	const response = await fetch(url);
-	// 	const data = await response.json();
-	//   getArtistsAndTitles(data.tracks.track);
-	// };
-
 	const getArtistsAndTitles = (songList) => {
 		const musicInfo = songList.map((song) => {
 			const title = song.name;
