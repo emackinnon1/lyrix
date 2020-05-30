@@ -10,12 +10,17 @@ export const Game = ({ artist, title }) => {
 	const [lyricsCount, setLyricsCount] = useState(0);
 	const [score, setScore] = useState(0);
 	const [splitLyric, setSplitLyric] = useState({});
+	const [error, setError] = useState(false);
 
 	const url = "https://api.lyrics.ovh/v1/";
 
-	useEffect(async () => {
-		const lyricsData = await getLyrics(url, artist, title);
-		setLyricsData(lyricsData);
+	useEffect(() => {
+		const setData = async () => {
+			const lyricsData = await getLyrics(url, artist, title);
+			!lyricsData && setError(true);
+			error && setLyricsData(lyricsData);
+		};
+		setData();
 	}, []);
 
 	const setLyricsData = (data) => {
@@ -34,7 +39,6 @@ export const Game = ({ artist, title }) => {
 	};
 
 	const generateLines = (lyrics) => {
-		console.log(lyrics);
 		let gameLyrics = lyrics.split(" ");
 		let wordToReplace = Math.floor(Math.random() * gameLyrics.length);
 		let missingWord = gameLyrics[wordToReplace];
@@ -65,14 +69,16 @@ export const Game = ({ artist, title }) => {
 				</p>
 			</div>
 			<div className="lyrics-main">
-				{currentLyrics && splitLyric ? (
+				{(currentLyrics && splitLyric && (
 					<GameCard
 						lyrics={currentLyrics}
 						updateCount={updateCount}
 						splitLyric={splitLyric}
 					/>
-				) : (
-					<p className="loading">..loading</p>
+				)) || (
+					<p className="loading">
+						{(error && "Please choose another song") || "..loading"}
+					</p>
 				)}
 			</div>
 		</div>
