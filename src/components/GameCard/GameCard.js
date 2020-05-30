@@ -1,52 +1,55 @@
 import React, { useState, useEffect } from "react";
+import './GameCard.css'
+const GameCard = ({lyrics, updateCount, splitLyric}) => {
 
-const GameCard = ({lyrics, updateCount}) => {
-
-    const [guesses, setGuesses] = useState({});
-    const [wordToReplace, setWordToReplace] = useState(-1);
-
-    const createLyricLine = (line, index) => {
-    const gameLyrics = line.split(' ');
+    console.log('splitLyric',splitLyric)
+    const [guess, setGuess] = useState('');
     
-    const correctWord = gameLyrics[wordToReplace];
-    const firstHalf = gameLyrics.splice(0, wordToReplace);
-    const secondHalf = gameLyrics.splice(1);
-    return (
-        <p key={index}>
-            {firstHalf.join(' ')}
-                <input type='text' className='input-box' key={index} id={index} onChange={(e) => handleChange(e)} placeholder='Your Answer Here' value={guesses}/>
-            {secondHalf.join(' ')}
-        </p>
-    )}
+   
+      
+            // let firstHalf = lyric[0].splitLine[0].join(' ')
+            // let secondHalf = lyric[0].splitLine[1].join(' ')
 
-    const checkWordToReplace = () => {
-        if(wordToReplace === -1){ 
-            setWordToReplace(Math.floor(Math.random() * gameLyrics.length));
-        }
-    }
+         
+
+       
+        
+    
+
+    useEffect(() => {
+       
+    }, [lyrics])
 
     const handleChange = (e) => {
-        e.preventDefault();
-		setGuesses({index:e.target.value})
-		// setGuesses({...guesses, ['guess'+inputId]: guess});
-		// console.log('guesses state', guesses)
+        // e.preventDefault();
+		setGuess(e.target.value)
     }
 
     const checkAnswers = (e) => {
         e.preventDefault();
-        updateCount();
+        let correctAnswer = splitLyric[0].missing.toUpperCase()
 
+        if (correctAnswer === guess.toUpperCase()) {
+            alert('correct!')
+            updateCount(true);
+            setGuess('')
+        } else {
+            alert(correctAnswer)
+            updateCount(false);
+            setGuess('')
+        }
     }
-
-    const displayGameData = lyrics.map((line, index)=>{
-        return createLyricLine(line, index)
-    });
 
     return (
     <form onSubmit={(e) => checkAnswers(e)}>
-        {displayGameData}
+    
+        <p className='game-txt'>
+            {splitLyric.splitLine[0] || 'loading'}
+                <input type='text' className='input-box' onChange={(e) => handleChange(e)} placeholder='...' value={guess}/>
+            {splitLyric.splitLine[1] || 'loading'}
+        </p>
         <div className='check-answers'>
-				<button type='submit' className='next-btn'>NEXT</button>
+		    <button type='submit' className='next-btn'>NEXT</button>
 		</div>
     </form>)
 }

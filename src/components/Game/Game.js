@@ -1,21 +1,13 @@
 import React, { useState, useEffect } from "react";
-import GameCard from "../GameCard/GameCard"
+import GameCard from "../GameCard/GameCard";
+import './Game.css'
 
 export const Game = ({ artist, title }) => {
 	const [lyrics, setLyrics] = useState("");
 	const [currentLyrics, setCurrentLyrics] = useState('');
 	const [lyricsCount, setLyricsCount] = useState(0);
-	const [isLoading, setIsLoading] = useState(true);
-	const [isPlaying, setIsPlaying] = useState(false);
 	const [score, setScore] = useState(0);
-	const [guesses, setGuesses] = useState({
-		guess0: '',
-		guess1: '',
-	});
-	const [answers, setAnswers] = useState({
-		answer0: '',
-		answer1: '',
-	});
+	const [splitLyric, setSplitLyric] = useState({});
 
 	const url = 'https://api.lyrics.ovh/v1/'
 	
@@ -23,79 +15,62 @@ export const Game = ({ artist, title }) => {
 	getLyrics()
 	}, [])
 
-	const setLyricsData = (data) => {
-		const sortedLyrics = data.lyrics.split('\n');
-		const finalLyrics = sortedLyrics.filter(lyric => lyric !== '');
-		setLyrics(finalLyrics);
-		sortCurrentLyrics(finalLyrics);
-	}
-
-	const sortCurrentLyrics = (finalLyrics) => {
-		setLyricsCount(lyricsCount + 2)
-		const currentLyrics = [finalLyrics[lyricsCount],finalLyrics[lyricsCount + 1]]
-		setCurrentLyrics(currentLyrics)
-		setIsLoading(false)
-		setIsPlaying(true);
-	}
 
 	const getLyrics = async () => {
 		const response = await fetch(url + artist + '/' + title);
 		const data = await response.json();
-	  	setLyricsData(data)
+		setLyricsData(data)
 	}
 
-	const updateCount = () => {
-		setLyricsCount(lyricsCount + 2);
+	const setLyricsData = (data) => {
+		const sortedLyrics = data.lyrics.split('\n');
+		const finalLyrics = sortedLyrics.filter(lyric => lyric !== '');
+		 setLyrics(finalLyrics);
+		 generateLines(finalLyrics[0])
+		 setCurrentLyrics(finalLyrics[lyricsCount])
+		 
 	}
 
-	const handleChange = (e) => {
-		const guess = e.target.value.toUpperCase();
-		const inputId = e.target.id
-		setGuesses({...guesses, ['guess'+inputId]: guess});
-		console.log('guesses state', guesses)
-	}
-
-	// const displayLyrics = (lyrics, index) => {
-	// 	let loaded = ('Loading...');
-	// 	const userAnswer = <input type='text' className='input-box' placeholder='Your Answer Here'>	</input>
-
-	// 	if(!lyrics) {
-	// 		return
-	// 	}
-	
-	// 	if (!isLoading && currentLyrics.length > 0) {
-	// 		const gameLyrics = lyrics.split(' ');
-	// 		const wordToReplace = Math.floor(Math.random() * gameLyrics.length);
-	// 		console.log('wtr', wordToReplace)
-	// 		const correctWord = gameLyrics[wordToReplace];
+	const updateCurrentLyrics = (finalLyrics) => {
+		setLyricsCount(lyricsCount + 1)
+		let currentLyrics = [finalLyrics[lyricsCount]]
+		setCurrentLyrics(currentLyrics)
+		generateLines(currentLyrics)
 		
-	// 		console.log('cw', correctWord);
-	// 		// setAnswers({...answers, ['answer'+index]: correctWord});
-	// 		const firstHalf = gameLyrics.splice(0, wordToReplace);
-	// 		const secondHalf = gameLyrics.splice(1);
-	
+	}
 
-	// 		loaded = <div>
-	// 								<p>{firstHalf.join(' ')}
-	// 								<input type='text' className='input-box' id={index} onChange={(e)=> handleChange(e)} placeholder='Your Answer Here' />
-	// 								{secondHalf.join(' ')}</p>
-	// 						</div>
-	// 	}
-	// 	return loaded
-	// }
+	const generateLines = (lyrics) => {
+		console.log(lyrics)
+		let gameLyrics = lyrics.split(' ');
+		let wordToReplace =  Math.floor(Math.random() * gameLyrics.length)
+		let missingWord = gameLyrics[wordToReplace];
+		let firstHalf = gameLyrics.splice(0, wordToReplace).join(' ');
+		let secondHalf = gameLyrics.splice(1).join(' ');
+		const lineInfo = {
+										splitLine: [firstHalf, secondHalf],
+										missing: missingWord
+		}
+		 setSplitLyric(lineInfo)
+	}
+
+
+	const updateCount = (isCorrect) => {
+		updateCurrentLyrics(lyrics)
+		if(isCorrect) {
+			setScore(score + 1)
+		} 
+	}
 
 	return (
 		<div className='game-container'>
 			<div className="game">
-				<p>
+				<p className='title-artist'>
 					{artist}, {title}
 				</p>
+				<p className='score'>SCORE: {score}/{lyrics.length}</p>
 			</div>
 			<div className='lyrics-main'>
-				{currentLyrics ? <GameCard lyrics={currentLyrics} updateCount={updateCount}/> : '...loading'}
-				
-				{/* {displayLyrics(currentLyrics[0], 0)}
-				{displayLyrics(currentLyrics[1], 1)} */}
+				{currentLyrics && splitLyric ? <GameCard lyrics={currentLyrics} updateCount={updateCount} splitLyric={splitLyric}/> : <p className='loading'>..loading</p>}
 			</div>
 		</div>
 	);
