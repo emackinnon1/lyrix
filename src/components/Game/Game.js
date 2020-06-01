@@ -41,7 +41,7 @@ export const Game = ({ artist, title, setScoreRecord, scoreRecord }) => {
 	};
 
 	const generateLines = (lyrics) => {
-		if (lyrics === undefined) {
+		if (!lyrics) {
 			endGame();
 			return;
 		}
