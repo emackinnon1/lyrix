@@ -56,6 +56,7 @@ export const Game = ({ artist, title }) => {
 	};
 
 	const updateCount = (correct, answer, guess) => {
+		 
 		updateCurrentLyrics(lyrics);
 		
 		if (correct) {
@@ -70,13 +71,10 @@ export const Game = ({ artist, title }) => {
 		}
 		setTimeout(() => {
 			setDisplayResult(null)
-		}, 3000)
+		}, 2500)
 
 	};
 
-
-	
-		
 	return (
 		<div className="game-container">
 			<div className="game">
@@ -96,13 +94,12 @@ export const Game = ({ artist, title }) => {
 					/>
 				)) || (
 					<p className="loading">
-						{(error && "Please choose another song") || "...loading"}
+						{(error && `Uh-Oh! Looks like ${title} by ${artist} isn't available right now. Please pick a different song.`) || "...loading"}
 					</p>
 				)}
 			</div>
 			<div className='message'>
 			{(displayResult && 
-				
 					<div className='answer-response'>
 						{(isCorrect && <p className='answer-response-correct'>Correct!</p>) || 
 						<div className='incorrect-container'>
