@@ -1,35 +1,45 @@
 .game {
-  display: flex;
-  justify-content: space-between;
-  background-color: #2e3532;
-  width: 75vw;
-  margin-bottom: 5px;
+	display: flex;
+	justify-content: space-between;
+	background-color: #2e3532;
+	width: 75vw;
+	margin-bottom: 5px;
 }
 
 .title-artist {
-  font-size: 2em;
-  margin: 0;
-  color :white;
+	font-size: 2em;
+	margin: 0;
+	color: white;
 }
 
 .score {
-  font-size: 2em;
-  margin: 0;
-  color: orange;
-
+	font-size: 2em;
+	margin: 0;
+	color: orange;
 }
 
 .game-container {
-  height: 15em;
-  width: 80vw;
-  display: grid;
-  border-radius: 5px;
+	height: 15em;
+	width: 80vw;
+	display: grid;
+	border-radius: 5px;
 }
 
 .loading {
-  height: 25vh;
-  width: 80vw;
-  display: grid;
-  border-radius: 5px;
-  font-size: 50px;
+	height: 25vh;
+	width: 80vw;
+	display: flex;
+	flex-direction: column;
+	border-radius: 5px;
+	font-size: 50px;
+}
+
+.see-scores-btn {
+	border-bottom: 5px solid #5efc8d;
+	color: black;
+	cursor: pointer;
+	font-size: 30px;
+	margin: auto;
+	width: 170px;
+	text-decoration: none;
 }
