@@ -7,13 +7,14 @@
 	color: #2e3532;
   border-color: #5efc8d;
   margin: 10px;
+  font-size: 2vw;
 } 
 .input-box:focus { 
   outline: none; 
 } 
 
 .next-btn {
-  font-size: 1em;
+  font-size: 1.5vw;
   text-align: center;
 	color: #2e3532;
   border-color: #5efc8d;
@@ -23,9 +24,10 @@
 }
 
 .next-btn:focus {
-
+  outline: none;
 }
 
 .game-txt {
-  font-size: 23px;
+  font-size: 2vw;
+
 }
