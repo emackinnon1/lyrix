@@ -6,10 +6,12 @@ import { Navbar } from "../Navbar/Navbar";
 import { Chart } from "../Chart/Chart";
 import { Game } from "../Game/Game";
 import { About } from "../About/About";
+import { Scores } from "../Scores/Scores";
 import { getChartData } from "../../apiCalls";
 
 const App = () => {
 	const [topTracks, setTopTracks] = useState([]);
+	const [scoreRecord, setScoreRecord] = useState([]);
 
 	const lastFmUrl =
 		"http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&limit=10&api_key=ae71028d5b049c13836f15604c505ffa&format=json";
@@ -35,8 +37,14 @@ const App = () => {
 			<Chart songList={topTracks} addFavoriteSong={addFavoriteSong} />
 		),
 		"/play/:artist/:title": ({ artist, title }) => (
-			<Game artist={artist} title={title} />
+			<Game
+				artist={artist}
+				title={title}
+				setScoreRecord={setScoreRecord}
+				scoreRecord={scoreRecord}
+			/>
 		),
+		"/scores": () => <Scores scoreRecord={scoreRecord} />,
 	};
 
 	useEffect(() => {

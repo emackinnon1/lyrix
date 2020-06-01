@@ -3,14 +3,16 @@ import GameCard from "../GameCard/GameCard";
 import "./Game.css";
 
 import { getLyrics } from "../../apiCalls";
+import { A } from "hookrouter";
 
-export const Game = ({ artist, title }) => {
+export const Game = ({ artist, title, setScoreRecord, scoreRecord }) => {
 	const [lyrics, setLyrics] = useState("");
 	const [currentLyrics, setCurrentLyrics] = useState("");
 	const [lyricsCount, setLyricsCount] = useState(0);
 	const [score, setScore] = useState(0);
 	const [splitLyric, setSplitLyric] = useState({});
 	const [error, setError] = useState(false);
+	const [gameOverMessage, setGameOverMessage] = useState();
 
 	const url = "https://api.lyrics.ovh/v1/";
 
@@ -39,6 +41,10 @@ export const Game = ({ artist, title }) => {
 	};
 
 	const generateLines = (lyrics) => {
+		if (!lyrics) {
+			endGame();
+			return;
+		}
 		const gameLyrics = lyrics.split(" ");
 		const wordToReplace = Math.floor(Math.random() * gameLyrics.length);
 		const missingWord = gameLyrics[wordToReplace];
@@ -51,13 +57,25 @@ export const Game = ({ artist, title }) => {
 		setSplitLyric(lineInfo);
 	};
 
+	const endGame = () => {
+		setScoreRecord([...scoreRecord, `${score}/${lyrics.length}`]);
+		setGameOverMessage(
+			<>
+				Game Over
+				<A className="see-scores-btn" href="/scores">
+					See Scores
+				</A>
+			</>
+		);
+	};
+
 	const updateCount = (isCorrect) => {
 		updateCurrentLyrics(lyrics);
 		if (isCorrect) {
 			setScore(score + 1);
 		}
 	};
-	console.log("hi" || lyrics);
+
 	return (
 		<div className="game-container">
 			<div className="game">
@@ -76,9 +94,11 @@ export const Game = ({ artist, title }) => {
 						splitLyric={splitLyric}
 					/>
 				)) || (
-					<p className="loading">
-						{(error && "Please choose another song") || "...loading"}
-					</p>
+					<div className="loading">
+						{(error && "Please choose another song") ||
+							gameOverMessage ||
+							"...loading"}
+					</div>
 				)}
 			</div>
 		</div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./Chart.css";
 import { AiFillStar } from "react-icons/ai";
 import { A } from "hookrouter";
