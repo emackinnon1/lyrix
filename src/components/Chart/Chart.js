@@ -3,7 +3,7 @@ import "./Chart.css";
 import { AiFillStar } from "react-icons/ai";
 import { A } from "hookrouter";
 
-export const Chart = ({ songList, chartTitle }) => {
+export const Chart = ({ songList, chartTitle, addFavoriteSong }) => {
 	const hyphenate = (words) => {
 		return words.split(" ").join("-");
 	};
@@ -12,8 +12,8 @@ export const Chart = ({ songList, chartTitle }) => {
 		return (
 			<div key={i} className="track-info">
 				<p>
+					<button className='star-button' onClick={()=>addFavoriteSong(song)}><AiFillStar className={song.favorite ? "active-star" : "star"} />{" "}</button>
 					<A href={`play/${hyphenate(song.artist)}/${hyphenate(song.title)}`}>
-						<AiFillStar className={song.favorite ? "active-star" : "star"} />{" "}
 						{song.artist} - {song.title}
 					</A>
 				</p>
