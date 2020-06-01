@@ -7,6 +7,7 @@ import { Chart } from "../Chart/Chart";
 import { Game } from "../Game/Game";
 import { About } from "../About/About";
 import { getChartData } from "../../apiCalls";
+import { Favorites } from "../Favorites/Favorites";
 
 const App = () => {
 	const [topTracks, setTopTracks] = useState([]);
@@ -27,7 +28,11 @@ const App = () => {
 		setTopTracks(musicInfo);
 	};
 
-	const addFavoriteSong = () => {};
+	const addFavoriteSong = (song) => {
+		const favLocation = topTracks.indexOf(song);
+		!topTracks[favLocation].favorite ? topTracks[favLocation].favorite = true : topTracks[favLocation].favorite = false;
+		setTopTracks([...topTracks]);
+	};
 
 	const routes = {
 		"/": () => <About />,
@@ -37,6 +42,9 @@ const App = () => {
 		"/play/:artist/:title": ({ artist, title }) => (
 			<Game artist={artist} title={title} />
 		),
+		"/favorites": () => (
+			<Favorites addFavoriteSong={addFavoriteSong} songList={topTracks}/>
+		)
 	};
 
 	useEffect(() => {
@@ -45,7 +53,7 @@ const App = () => {
 			getArtistsAndTitles(chart);
 		};
 		fetchData();
-	}, []);
+	},[]);
 
 	const match = useRoutes(routes);
 
