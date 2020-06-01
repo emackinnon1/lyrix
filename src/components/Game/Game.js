@@ -3,8 +3,9 @@ import GameCard from "../GameCard/GameCard";
 import "./Game.css";
 
 import { getLyrics } from "../../apiCalls";
+import { A } from "hookrouter";
 
-export const Game = ({ artist, title }) => {
+export const Game = ({ artist, title, setScoreRecord, scoreRecord }) => {
 	const [lyrics, setLyrics] = useState("");
 	const [currentLyrics, setCurrentLyrics] = useState("");
 	const [lyricsCount, setLyricsCount] = useState(0);
@@ -15,6 +16,7 @@ export const Game = ({ artist, title }) => {
 	const [currentGuess, setCurrentGuess] = useState('');
 	const [prevWord , setPrevWord] = useState('');
 	const [displayResult, setDisplayResult] = useState(null);
+	const [gameOverMessage, setGameOverMessage] = useState();
 
 	const url = "https://api.lyrics.ovh/v1/";
 
@@ -43,6 +45,10 @@ export const Game = ({ artist, title }) => {
 	};
 
 	const generateLines = (lyrics) => {
+		if (!lyrics) {
+			endGame();
+			return;
+		}
 		const gameLyrics = lyrics.split(" ");
 		const wordToReplace = Math.floor(Math.random() * gameLyrics.length);
 		const missingWord = gameLyrics[wordToReplace];
@@ -55,8 +61,19 @@ export const Game = ({ artist, title }) => {
 		setSplitLyric(lineInfo);
 	};
 
+	const endGame = () => {
+		setScoreRecord([...scoreRecord, `${score}/${lyrics.length}`]);
+		setGameOverMessage(
+			<>
+				Game Over
+				<A className="see-scores-btn" href="/scores">
+					See Scores
+				</A>
+			</>
+		);
+	};
+
 	const updateCount = (correct, answer, guess) => {
-		 
 		updateCurrentLyrics(lyrics);
 		
 		if (correct) {
@@ -93,9 +110,11 @@ export const Game = ({ artist, title }) => {
 						splitLyric={splitLyric}
 					/>
 				)) || (
-					<p className="loading">
-						{(error && `Uh-Oh! Looks like ${title} by ${artist} isn't available right now. Please pick a different song.`) || "...loading"}
-					</p>
+					<div className="loading">
+						{(error && `Uh-Oh! Looks like ${title} by ${artist} isn't available right now. Please pick a different song.`) ||
+							gameOverMessage ||
+							"...loading"}
+					</div>
 				)}
 			</div>
 			<div className='message'>

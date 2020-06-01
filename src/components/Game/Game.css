@@ -6,16 +6,15 @@
 }
 
 .title-artist {
-  font-size: 2em;
-  margin: 0;
-  color :white;
+	font-size: 2em;
+	margin: 0;
+	color: white;
 }
 
 .score {
-  font-size: 2em;
-  margin: 0;
-  color: orange;
-
+	font-size: 2em;
+	margin: 0;
+	color: orange;
 }
 
 .game-container {
@@ -26,11 +25,12 @@
 }
 
 .loading {
-  height: 25vh;
-  width: 80vw;
-  display: grid;
-  border-radius: 5px;
-  font-size: 40px;
+	height: 25vh;
+	width: 80vw;
+	display: flex;
+	flex-direction: column;
+	border-radius: 5px;
+	font-size: 50px;
 }
 
  .answer-response {
@@ -58,7 +58,19 @@
 }
 
 .lyrics-main {
-  height: 14em;
   background-color: white;
   width:80vw;
+	height: 15em;
+	display: grid;
+	border-radius: 5px;
+}
+
+.see-scores-btn {
+	border-bottom: 5px solid #5efc8d;
+	color: black;
+	cursor: pointer;
+	font-size: 30px;
+	margin: auto;
+	width: 170px;
+	text-decoration: none;
 }

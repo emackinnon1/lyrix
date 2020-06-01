@@ -2,3 +2,20 @@
 	color: #5efc8d;
 }
 
+.star {
+	color: #2e3532;
+}
+
+.star-button { 
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	background: white;
+	border: none;
+	height: 30px;
+	width: 30px;
+	background: white;
+	border: none;
+	cursor: pointer;
+}
+
