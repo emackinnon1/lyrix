@@ -11,6 +11,10 @@ export const Game = ({ artist, title }) => {
 	const [score, setScore] = useState(0);
 	const [splitLyric, setSplitLyric] = useState({});
 	const [error, setError] = useState(false);
+	const [isCorrect, setIsCorrect] = useState(false);
+	const [currentGuess, setCurrentGuess] = useState('');
+	const [prevWord , setPrevWord] = useState('');
+	const [displayResult, setDisplayResult] = useState(null);
 
 	const url = "https://api.lyrics.ovh/v1/";
 
@@ -51,13 +55,28 @@ export const Game = ({ artist, title }) => {
 		setSplitLyric(lineInfo);
 	};
 
-	const updateCount = (isCorrect) => {
+	const updateCount = (correct, answer, guess) => {
 		updateCurrentLyrics(lyrics);
-		if (isCorrect) {
+		
+		if (correct) {
 			setScore(score + 1);
+			setIsCorrect(true);
+			setDisplayResult(true);
+		} else {
+			setDisplayResult(true);
+			setCurrentGuess(guess.toUpperCase());
+			setPrevWord(answer);
+			setIsCorrect(false)
 		}
+		setTimeout(() => {
+			setDisplayResult(null)
+		}, 3000)
+
 	};
-	console.log("hi" || lyrics);
+
+
+	
+		
 	return (
 		<div className="game-container">
 			<div className="game">
@@ -80,6 +99,21 @@ export const Game = ({ artist, title }) => {
 						{(error && "Please choose another song") || "...loading"}
 					</p>
 				)}
+			</div>
+			<div className='message'>
+			{(displayResult && 
+				
+					<div className='answer-response'>
+						{(isCorrect && <p className='answer-response-correct'>Correct!</p>) || 
+						<div className='incorrect-container'>
+							<p className='white'>Oops! Your answer: </p>
+							<p className='answer-response'>"{currentGuess}"</p>
+							<p className='white'>, is wrong. The correct answer is: </p>
+							<p className='answer-response'> "{prevWord}" </p>
+						</div>}
+					</div>
+					)
+			|| ''}
 			</div>
 		</div>
 	);

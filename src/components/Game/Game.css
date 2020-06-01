@@ -2,8 +2,7 @@
   display: flex;
   justify-content: space-between;
   background-color: #2e3532;
-  width: 75vw;
-  margin-bottom: 5px;
+  width: 80vw;
 }
 
 .title-artist {
@@ -20,10 +19,10 @@
 }
 
 .game-container {
-  height: 15em;
-  width: 80vw;
+  height: 25vh;
   display: grid;
   border-radius: 5px;
+  margin-bottom: 5%;
 }
 
 .loading {
@@ -32,4 +31,34 @@
   display: grid;
   border-radius: 5px;
   font-size: 50px;
+}
+
+
+ .answer-response {
+   font-size: 1.8vw;
+   color: orange;
+   padding-left: 10px;
+ }
+
+ .answer-response-correct {
+  font-size: 1.8vw;
+  color: #5efc8d;
+}
+ 
+.white {
+  color: white;
+  font-size: 1.8vw;
+}
+
+.incorrect-container {
+  margin-top: 2%;
+  display: flex;
+  justify-content: center;
+  height: 2em; 
+}
+
+.lyrics-main {
+  height: 14em;
+  background-color: white;
+  width:80vw;
 }
