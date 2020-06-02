@@ -5,6 +5,7 @@ export const getLyrics = async (url, artist, title) => {
 			throw new Error();
 		}
 		const data = await response.json();
+		console.log(data);
 		return data;
 	} catch (error) {
 		return false;

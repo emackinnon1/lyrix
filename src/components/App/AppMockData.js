@@ -1,7 +1,7 @@
-export const tracks = 
-[
- {artist: {name: "Lady Gaga"}, name: 'rAIn oN mE (with aRIaNa gRAndE)'}
-]
+export const tracks = [
+	{ artist: { name: "Lady Gaga" }, name: "rAIn oN mE (with aRIaNa gRAndE)" },
+];
 export const lyrics = {
-  lyrics: "I didn't ask for a free ride I only asked you to show me a real good time I never asked for the rainfall At least I showed up, you showed me nothing at all It's coming down on me Water like misery It's coming down on me I'm ready, rain on me"
-}
+	lyrics:
+		"Open your arms, come and get wet, come and get wet\r\nThe only certainty we have is that the sun dies at 6 and at 6 it revives\r\n",
+};
