@@ -30,6 +30,7 @@ const GameCard = ({ lyrics, updateCount, splitLyric }) => {
 				{splitLyric.splitLine[0]}
 				<input
 					type="text"
+					id={splitLyric.missing}
 					className="input-box"
 					onChange={(e) => handleChange(e)}
 					placeholder="..."
