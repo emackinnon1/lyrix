@@ -8,7 +8,7 @@ import { Game } from "../Game/Game";
 import { About } from "../About/About";
 import { Scores } from "../Scores/Scores";
 import { getChartData } from "../../apiCalls";
-import { Favorites } from "../Favorites/Favorites";
+import Favorites  from "../Favorites/Favorites";
 
 const App = () => {
 	const [topTracks, setTopTracks] = useState([]);
@@ -29,7 +29,7 @@ const App = () => {
 		});
 	
 		setTopTracks(musicInfo);
-	};
+	};  
 
 	const addFavoriteSong = (song) => {
 		const favLocation = topTracks.indexOf(song);
