@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./GameCard.css";
 
 const GameCard = ({ lyrics, updateCount, splitLyric }) => {
-	// console.log("splitLyric", splitLyric);
 	const [guess, setGuess] = useState("");
-
 	useEffect(() => {}, [lyrics]);
 
 	const handleChange = (e) => {
@@ -16,11 +14,9 @@ const GameCard = ({ lyrics, updateCount, splitLyric }) => {
 		let correctAnswer = splitLyric.missing.toUpperCase();
 
 		if (correctAnswer.includes(guess.toUpperCase()) && correctAnswer.length - guess.length < 2) {
-			console.log("correct!");
 			updateCount(true);
 			setGuess("");
 		} else {
-			console.log(correctAnswer);
 			updateCount(false, splitLyric.missing.toUpperCase(), guess);
             setGuess("");
 		}

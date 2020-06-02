@@ -28,7 +28,7 @@ const App = () => {
 			};
 		});
 		setTopTracks(musicInfo);
-	};
+	};  
 
 	const addFavoriteSong = (song) => {
 		const favLocation = topTracks.indexOf(song);
