@@ -14,9 +14,11 @@ const GameCard = ({ lyrics, updateCount, splitLyric }) => {
 		let correctAnswer = splitLyric.missing.toUpperCase();
 
 		if (correctAnswer.includes(guess.toUpperCase()) && correctAnswer.length - guess.length < 2) {
+			
 			updateCount(true);
 			setGuess("");
 		} else {
+			
 			updateCount(false, splitLyric.missing.toUpperCase(), guess);
             setGuess("");
 		}
