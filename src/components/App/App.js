@@ -27,6 +27,7 @@ const App = () => {
 				favorite: false,
 			};
 		});
+	
 		setTopTracks(musicInfo);
 	};
 
