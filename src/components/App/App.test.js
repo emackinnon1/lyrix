@@ -1,40 +1,81 @@
 import React from 'react';
-import { render, fireEvent, cleanup } from '@testing-library/react';
+import { render, fireEvent, waitFor, act } from '@testing-library/react';
 import App from './App';
 import '@testing-library/jest-dom';
-import { MemoryRouter } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom';
+import { lyrics, tracks } from './AppMockData.js';
+import { getLyrics, getChartData } from '../../apiCalls';
+
+jest.mock('../../apiCalls');
+
+import MutationObserver from '@sheerun/mutationobserver-shim'
+window.MutationObserver = MutationObserver
 
 
 describe('App', () => {
+  
+  let mockChartsData;
+  let mockLyricsData;
 
-  it('should navigate to scores page', () => {
+  beforeEach(() => {
+    mockChartsData = tracks;
+    mockLyricsData = lyrics;
+    getLyrics.mockResolvedValueOnce(mockLyricsData);
+    getChartData.mockResolvedValueOnce(mockChartsData);
+  })
+
+    it('should display the top tracks on the the "play" page', async () => {
+
+      const { getByText } = render(
+      <App />
+      );
+    
+
+    fireEvent.click(getByText('Play')) 
+
+    const track = await waitFor(() => getByText('Lady Gaga - rAIn oN mE (with aRIaNa gRAndE)'))
+
+    expect(track).toBeInTheDocument();
+    
+  })
+
+  it('should navigate to scores page', async () => {
+  
     const { getByText } = render(
-      <MemoryRouter>
-      
-        <App />
-       
-      </MemoryRouter>
+      <App />
     );
       
     fireEvent.click(getByText('Scores'));
     
-    const scorePage = getByText('Your scores:');
+    const scorePage = await waitFor(() => getByText('Your scores:'))
     expect(scorePage).toBeInTheDocument();
-   
-    fireEvent.click(getByText('About'));
 
   }) 
-
-  it('should display the rules when the app loads', () => {
+ 
+  it('should display the rules when the app loads', async () => {
+  
     const { getByText } = render(
-    <MemoryRouter>
-       <App />
-    </MemoryRouter>
+    <App />
     );
     
-    const rules = getByText('READ THE RULES FUCKHEAD');
+    fireEvent.click(getByText('About'));
+    const rules = await waitFor(() => getByText('READ THE RULES FUCKHEAD'))
     expect(rules).toBeInTheDocument();
+  })
 
-    fireEvent.click(getByText('About'))
+  it('should display the lyrics when a song is selected', async () => {
+    const { getByText, getByPlaceholderText  } = render(
+     <App />
+      );
+    
+      fireEvent.click(getByText('Play'));
+
+      const track = await waitFor(() => getByText('Lady Gaga - rAIn oN mE (with aRIaNa gRAndE)'))
+
+      fireEvent.click(track)
+
+      const score = await waitFor(() => getByPlaceholderText('...'))
+    
+      expect(score).toBeInTheDocument();
   })
 }) 
