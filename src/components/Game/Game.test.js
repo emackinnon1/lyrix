@@ -17,11 +17,9 @@ describe("Game", () => {
 	it("should fetch lyric data", async () => {
 		getLyrics.mockResolvedValueOnce(lyrics);
 
-		const { getByText, debug } = render(<Game />);
+		const { getByText } = render(<Game />);
 
-		const songLyrics = await waitFor(() =>
-			getByText("Open your arms", { exact: false })
-		);
+		const songLyrics = await waitFor(() => getByText("wet", { exact: false }));
 
 		expect(songLyrics).toBeInTheDocument();
 	});
@@ -29,7 +27,7 @@ describe("Game", () => {
 	it("should display Game Over message", async () => {
 		getLyrics.mockResolvedValueOnce(lyrics);
 
-		const { getByText, debug } = render(
+		const { getByText } = render(
 			<Game scoreRecord={mockScoreRecord} setScoreRecord={jest.fn()} />
 		);
 
@@ -44,7 +42,5 @@ describe("Game", () => {
 		);
 
 		expect(gameOver).toBeInTheDocument();
-
-		debug();
 	});
 });
