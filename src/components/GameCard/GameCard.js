@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./GameCard.css";
 
 const GameCard = ({ lyrics, updateCount, splitLyric }) => {
-	// console.log("splitLyric", splitLyric);
 	const [guess, setGuess] = useState("");
-
 	useEffect(() => {}, [lyrics]);
 
 	const handleChange = (e) => {

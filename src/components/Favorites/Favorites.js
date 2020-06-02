@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./Favorites.css";
 import { AiFillStar } from "react-icons/ai";
 import { A } from "hookrouter";
 
-export const Favorites = ({ addFavoriteSong, songList}) => { 
-    
+const Favorites = ({ addFavoriteSong, songList }) => { 
     const favoriteSongs = songList.filter( song => song.favorite === true)
     const hyphenate = (words) => {
 		return words.split(" ").join("-");
     };
     
-    const displayFavorites = favoriteSongs.map(song => {
+    const displayFavorites = favoriteSongs.map((song, index) => {
             return (
-                <div>
-                    <button className='star-button' onClick={()=>addFavoriteSong(song)}>
+                <div key={index}>
+                    <button aria-label={song.title} className='star-button' onClick={()=>addFavoriteSong(song)}>
                         <AiFillStar className={song.favorite ? "active-star" : "star"} />
                         {" "}
                     </button>
@@ -32,7 +31,7 @@ export const Favorites = ({ addFavoriteSong, songList}) => {
     )
 };
 
-
+export default Favorites;
 
 
 
