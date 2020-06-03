@@ -1,6 +1,6 @@
 import React from "react";
 import { Game } from "./Game";
-import { render, fireEvent, waitFor } from "@testing-library/react";
+import { render, fireEvent, waitFor, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { MemoryRouter } from "react-router-dom";
 import { lyrics } from "../App/AppMockData.js";
@@ -27,15 +27,30 @@ describe("Game", () => {
 	it("should display Game Over message", async () => {
 		getLyrics.mockResolvedValueOnce(lyrics);
 
-		const { getByText } = render(
+		const { getByText, getByTestId, getByPlaceholderText} = render(
 			<Game scoreRecord={mockScoreRecord} setScoreRecord={jest.fn()} />
 		);
+		
+		const inputForm = await waitFor(() => getByTestId('inputForm'));
 
-		const nextBtn = await waitFor(() => getByText("NEXT"));
+		act(async ()=> {
+            fireEvent.change(getByPlaceholderText("..."), {
+			target: { value: "Alice" },
+		})})
+		act(async()=> await fireEvent.submit(inputForm))
 
-		fireEvent.click(nextBtn);
-		fireEvent.click(nextBtn);
-		fireEvent.click(nextBtn);
+		act(async ()=> {
+            await fireEvent.change(getByPlaceholderText("..."), {
+			target: { value: "Alice" },
+		})})
+		act(async()=> await fireEvent.submit(inputForm))
+
+		act(async ()=> {
+            awaitfireEvent.change(getByPlaceholderText("..."), {
+			target: { value: "Alice" },
+		})})
+		act(async()=> await fireEvent.submit(inputForm))
+
 
 		const gameOver = await waitFor(() =>
 			getByText("Game Over", { exact: false })
