@@ -102,7 +102,9 @@ export const Game = ({ artist, title, setScoreRecord, scoreRecord, topTracks }) 
 	
 	return (
 		<div className="game-container">
-		<a href={currentSong.songUrl} target='_blank'>LINK TO SONG</a>
+		<div className='song-link'>
+			<a className='link' href={currentSong.songUrl} target='_blank'>LINK TO SONG</a>
+		</div>
 			<div className="game">
 				<p className="title-artist">
 					{artist}, {title}
@@ -131,7 +133,9 @@ export const Game = ({ artist, title, setScoreRecord, scoreRecord, topTracks }) 
 				{(displayResult && (
 					<div className="answer-response">
 						{(isCorrect && (
+							<div className="incorrect-container">
 							<p className="answer-response-correct">Correct!</p>
+							</div>
 						)) || (
 							<div className="incorrect-container">
 								<p className="white">Oops! Your answer: </p>

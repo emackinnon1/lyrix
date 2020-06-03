@@ -24,8 +24,8 @@ const Favorites = ({ addFavoriteSong, songList }) => {
 
     return (
         <div>
-            {!favoriteSongs.length && <h3>Add some favorites!</h3>}
-            {!!favoriteSongs.length && <h3>Your Favorite Songs</h3>}
+            {!favoriteSongs.length && <h2>Add some favorites!</h2>}
+            {!!favoriteSongs.length && <h2>Your Favorite Songs</h2>}
             {displayFavorites}
         </div>
     )

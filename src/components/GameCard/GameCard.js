@@ -41,7 +41,7 @@ const GameCard = ({ lyrics, updateCount, splitLyric }) => {
 					<input placeholder='NEXT' type="submit" className="check-answers next-btn" value="NEXT"/>
 				</div>
 			</form>
-				{errors.inputName  && <p>{errors.inputName.message}</p>}
+				{errors.inputName  && <p className='enter-input'>{errors.inputName.message}</p>}
 		</>
 	);
 };
