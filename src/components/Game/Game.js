@@ -5,7 +5,7 @@ import "./Game.css";
 import { getLyrics } from "../../apiCalls";
 import { A } from "hookrouter";
 
-export const Game = ({ artist, title, setScoreRecord, scoreRecord }) => {
+export const Game = ({ artist, title, setScoreRecord, scoreRecord, topTracks }) => {
 	const [lyrics, setLyrics] = useState("");
 	const [currentLyrics, setCurrentLyrics] = useState("");
 	const [lyricsCount, setLyricsCount] = useState(0);
@@ -19,7 +19,7 @@ export const Game = ({ artist, title, setScoreRecord, scoreRecord }) => {
 	const [gameOverMessage, setGameOverMessage] = useState();
 
 	const url = "https://api.lyrics.ovh/v1/";
-
+	console.log(topTracks)
 	useEffect(() => {
 		let isMounted = true;
 		const setData = async () => {
@@ -97,9 +97,12 @@ export const Game = ({ artist, title, setScoreRecord, scoreRecord }) => {
 		// 	setDisplayResult(null);
 		// }, 2500);
 	};
-
+	const titleString = title.replace(/\-/g, ' ')
+	const currentSong = topTracks.find(song => song.title == titleString)
+	
 	return (
 		<div className="game-container">
+		<a href={currentSong.songUrl} target='_blank'>LINK TO SONG</a>
 			<div className="game">
 				<p className="title-artist">
 					{artist}, {title}

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./GameCard.css";
 import { useForm } from "react-hook-form";
 
-const GameCard = ({ lyrics, updateCount, splitLyric, lyricsCount }) => {
+const GameCard = ({ lyrics, updateCount, splitLyric }) => {
 	const { register, handleSubmit, errors, reset } = useForm();
 	const onSubmit = (data) => checkAnswer(data.inputName);
 
