@@ -27,30 +27,32 @@ describe("Game", () => {
 	it("should display Game Over message", async () => {
 		getLyrics.mockResolvedValueOnce(lyrics);
 
-		const { getByText, getByTestId, getByPlaceholderText} = render(
+		const { getByText, getByTestId, getByPlaceholderText } = render(
 			<Game scoreRecord={mockScoreRecord} setScoreRecord={jest.fn()} />
 		);
-		
-		const inputForm = await waitFor(() => getByTestId('inputForm'));
 
-		act(async ()=> {
-            fireEvent.change(getByPlaceholderText("..."), {
-			target: { value: "Alice" },
-		})})
-		act(async()=> await fireEvent.submit(inputForm))
+		const inputForm = await waitFor(() => getByTestId("inputForm"));
 
-		act(async ()=> {
-            await fireEvent.change(getByPlaceholderText("..."), {
-			target: { value: "Alice" },
-		})})
-		act(async()=> await fireEvent.submit(inputForm))
+		act(async () => {
+			fireEvent.change(getByPlaceholderText("..."), {
+				target: { value: "Alice" },
+			});
+		});
+		act(async () => await fireEvent.submit(inputForm));
 
-		act(async ()=> {
-            awaitfireEvent.change(getByPlaceholderText("..."), {
-			target: { value: "Alice" },
-		})})
-		act(async()=> await fireEvent.submit(inputForm))
+		act(async () => {
+			await fireEvent.change(getByPlaceholderText("..."), {
+				target: { value: "Alice" },
+			});
+		});
+		act(async () => await fireEvent.submit(inputForm));
 
+		act(async () => {
+			awaitfireEvent.change(getByPlaceholderText("..."), {
+				target: { value: "Alice" },
+			});
+		});
+		act(async () => await fireEvent.submit(inputForm));
 
 		const gameOver = await waitFor(() =>
 			getByText("Game Over", { exact: false })
