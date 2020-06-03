@@ -2,7 +2,7 @@
 	display: flex;
 	justify-content: space-between;
 	background-color: #2e3532;
-	width: 80vw;
+	/* width: 80vw; */
 }
 
 .title-artist {
@@ -18,10 +18,7 @@
 }
 
 .game-container {
-	height: 25vh;
-	display: grid;
-	border-radius: 5px;
-	margin-bottom: 5%;
+	margin: -2em;
 }
 
 .loading {
@@ -36,7 +33,6 @@
 .answer-response {
 	font-size: 1.8vw;
 	color: orange;
-	padding-left: 10px;
 }
 
 .answer-response-correct {
@@ -59,10 +55,9 @@
 
 .lyrics-main {
 	background-color: white;
-	width: 80vw;
-	height: 15em;
 	display: grid;
 	border-radius: 5px;
+	padding: 2em;
 }
 
 .btn {

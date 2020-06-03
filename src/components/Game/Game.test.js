@@ -30,60 +30,62 @@ describe("Game", () => {
 		const { getByText, getByPlaceholderText } = render(
 			<Game scoreRecord={mockScoreRecord} setScoreRecord={jest.fn()} />
 		);
-		
-		const inputForm = await waitFor(() => getByPlaceholderText('NEXT'));
 
-		await act(async ()=> {
-			fireEvent.change(getByPlaceholderText("..."), {
-			target: { value: "Alice" },
-		})})
-		
-		await waitFor(() => {
-			fireEvent.click(inputForm)
-		})
+		const inputForm = await waitFor(() => getByPlaceholderText("NEXT"));
 
-		await act(async ()=> {
+		await act(async () => {
 			fireEvent.change(getByPlaceholderText("..."), {
-			target: { value: "Alice1" },
-		})})
+				target: { value: "Alice" },
+			});
+		});
 
 		await waitFor(() => {
-			fireEvent.click(inputForm)
-		})
+			fireEvent.click(inputForm);
+		});
 
-		await act(async ()=> {
+		await act(async () => {
 			fireEvent.change(getByPlaceholderText("..."), {
-			target: { value: "Alice2" },
-		})})
+				target: { value: "Alice1" },
+			});
+		});
 
 		await waitFor(() => {
-			fireEvent.click(inputForm)
-		})
+			fireEvent.click(inputForm);
+		});
+
+		await act(async () => {
+			fireEvent.change(getByPlaceholderText("..."), {
+				target: { value: "Alice2" },
+			});
+		});
+
+		await waitFor(() => {
+			fireEvent.click(inputForm);
+		});
 
 		const gameOver = await waitFor(() =>
 			getByText("Game Over", { exact: false })
-		)
-	
+		);
+
 		expect(gameOver).toBeInTheDocument();
-	})
-		// act(async ()=> {
-    //         fireEvent.change(getByPlaceholderText("..."), {
-		// 	target: { value: "Alice" },
-		// })})
-		// act(async()=> await fireEvent.submit(inputForm))
+	});
+	// act(async ()=> {
+	//         fireEvent.change(getByPlaceholderText("..."), {
+	// 	target: { value: "Alice" },
+	// })})
+	// act(async()=> await fireEvent.submit(inputForm))
 
-		// act(async ()=> {
-    //         await fireEvent.change(getByPlaceholderText("..."), {
-		// 	target: { value: "Alice" },
-		// })})
-		// act(async()=> await fireEvent.submit(inputForm))
+	// act(async ()=> {
+	//         await fireEvent.change(getByPlaceholderText("..."), {
+	// 	target: { value: "Alice" },
+	// })})
+	// act(async()=> await fireEvent.submit(inputForm))
 
-		// act(async ()=> {
-    //         awaitfireEvent.change(getByPlaceholderText("..."), {
-		// 	target: { value: "Alice" },
-		// })})
-		// act(async()=> await fireEvent.submit(inputForm))
-
+	// act(async ()=> {
+	//         awaitfireEvent.change(getByPlaceholderText("..."), {
+	// 	target: { value: "Alice" },
+	// })})
+	// act(async()=> await fireEvent.submit(inputForm))
 
 	// 	const gameOver = await waitFor(() =>
 	// 		getByText("Game Over", { exact: false })
@@ -91,4 +93,4 @@ describe("Game", () => {
 
 	// 	expect(gameOver).toBeInTheDocument();
 	// });
-})
+});
