@@ -70,8 +70,11 @@ export const Game = ({ artist, title, setScoreRecord, scoreRecord }) => {
 		setGameOverMessage(
 			<>
 				Game Over
-				<A className="see-scores-btn" href="/scores">
+				<A className="btn" href="/scores">
 					See Scores
+				</A>
+				<A className="btn" href="/play">
+					Play again
 				</A>
 			</>
 		);

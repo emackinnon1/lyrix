@@ -18,7 +18,6 @@ describe("App", () => {
 	});
 
 	it('should display the top tracks on the the "play" page', async () => {
-
 		const { getByText } = render(<App />);
 
 		fireEvent.click(getByText("Play"));
@@ -31,7 +30,6 @@ describe("App", () => {
 	});
 
 	it("should navigate to scores page", async () => {
-
 		const { getByText } = render(<App />);
 
 		fireEvent.click(getByText("Scores"));
@@ -44,7 +42,9 @@ describe("App", () => {
 		const { getByText } = render(<App />);
 
 		fireEvent.click(getByText("About"));
-		const rules = await waitFor(() => getByText("READ THE RULES FUCKHEAD"));
+		const rules = await waitFor(() =>
+			getByText("on the navigation menu", { exact: false })
+		);
 		expect(rules).toBeInTheDocument();
 	});
 
@@ -62,7 +62,7 @@ describe("App", () => {
 		const score = await waitFor(() => getByPlaceholderText("..."));
 
 		expect(score).toBeInTheDocument();
-  });
+	});
 
   it("should be able to input a correct answer", async () => {
 		const { getByText, getByPlaceholderText } = render(<App />);
@@ -107,5 +107,4 @@ describe("App", () => {
 	
     expect(message).toBeInTheDocument();
   });
-
 });
