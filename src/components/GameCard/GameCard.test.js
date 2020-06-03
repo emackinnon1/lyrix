@@ -1,7 +1,10 @@
 import React from "react";
 import GameCard from "./GameCard";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import MutationObserver from "@sheerun/mutationobserver-shim";
+
+window.MutationObserver = MutationObserver;
 
 describe("GameCard", () => {
 	const currentLyrics = "My name isn't Alice I'll keep looking for Wonderland";
@@ -26,22 +29,23 @@ describe("GameCard", () => {
 		).toBeInTheDocument();
 	});
 
-	it("should increase score if input word is correct", () => {
-		const { getByText, getByPlaceholderText } = render(
+	it("should increase score if input word is correct", async () => {
+		const { getByTestId, getByPlaceholderText } = render(
 			<GameCard
 				lyrics={currentLyrics}
 				updateCount={mockUpdateCount}
 				splitLyric={splitLyric}
 			/>
-		);
-		fireEvent.change(getByPlaceholderText("..."), {
+        );
+		await act(async ()=> {
+            fireEvent.change(getByPlaceholderText("..."), {
 			target: { value: "Alice" },
-		});
-		fireEvent.click(getByText("NEXT"));
+		})});
+        await act(async()=>fireEvent.submit(getByTestId('inputForm')));
 		expect(mockUpdateCount).toHaveBeenCalledWith(true);
 	});
 
-	it("should not increase score if input word is incorrect", () => {
+	it("should not increase score if input word is incorrect", async () => {
 		const { getByText, getByPlaceholderText } = render(
 			<GameCard
 				lyrics={currentLyrics}
@@ -49,10 +53,10 @@ describe("GameCard", () => {
 				splitLyric={splitLyric}
 			/>
 		);
-		fireEvent.change(getByPlaceholderText("..."), {
+		act(()=>fireEvent.change(getByPlaceholderText("..."), {
 			target: { value: "Bobby" },
-		});
-		fireEvent.click(getByText("NEXT"));
+		}))
+		await act(()=>fireEvent.click(getByText("NEXT")));
 		expect(mockUpdateCount).toHaveBeenCalledWith(
 			false,
 			splitLyric.missing.toUpperCase(),

@@ -1,50 +1,48 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./GameCard.css";
+import { useForm } from "react-hook-form";
 
-const GameCard = ({ lyrics, updateCount, splitLyric }) => {
-	const [guess, setGuess] = useState("");
-	useEffect(() => {}, [lyrics]);
+const GameCard = ({ lyrics, updateCount, splitLyric, lyricsCount }) => {
+	const { register, handleSubmit, errors, reset } = useForm();
+	const onSubmit = (data) => checkAnswer(data.inputName);
 
-	const handleChange = (e) => {
-		setGuess(e.target.value);
-	};
-
-	const checkAnswers = (e) => {
-		e.preventDefault();
+	const checkAnswer = (data) => {
+		console.log('data from onSubmit',data)
+		if(errors.inputName){
+			return
+		}
 		let correctAnswer = splitLyric.missing.toUpperCase();
-
-		if (correctAnswer.includes(guess.toUpperCase()) && correctAnswer.length - guess.length < 2) {
-			
+		if (correctAnswer.includes(data.toUpperCase()) && correctAnswer.length - data.length < 2) {
 			updateCount(true);
-			setGuess("");
+			reset();
 		} else {
-			
-			updateCount(false, splitLyric.missing.toUpperCase(), guess);
-            setGuess("");
+			updateCount(false, splitLyric.missing.toUpperCase(), data);
+			reset();
 		}
 	};
 
+	useEffect(() => {},[lyrics])
 	return (
-		<form onSubmit={(e) => checkAnswers(e)}>
-			<p className="game-txt">
-				{splitLyric.splitLine[0]}
-				<input
-					type="text"
-					id={splitLyric.missing}
-					className="input-box"
-					onChange={(e) => handleChange(e)}
-					placeholder="..."
-					required
-					value={guess}
-				/>
-				{splitLyric.splitLine[1]}
-			</p>
-			<div className="check-answers">
-				<button type="submit" className="next-btn">
-					NEXT
-				</button>
-			</div>
-		</form>
+		<>
+			<form data-testid='inputForm' onSubmit={handleSubmit(onSubmit)}>
+				<div className='game-txt'>
+					{splitLyric.splitLine[0]}
+					<input
+						type="text"
+						id={splitLyric.missing}
+						name='inputName'
+						className="input-box"
+						placeholder="..."
+						ref={register({ required: 'Please enter an answer!' })}
+					/>
+					{splitLyric.splitLine[1]}
+				</div>
+				<div className="check-answers">
+					<input  type="submit" className="check-answers next-btn" value="NEXT"/>
+				</div>
+			</form>
+				{errors.inputName  && <p>{errors.inputName.message}</p>}
+		</>
 	);
 };
 
