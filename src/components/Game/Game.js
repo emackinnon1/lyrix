@@ -21,12 +21,16 @@ export const Game = ({ artist, title, setScoreRecord, scoreRecord }) => {
 	const url = "https://api.lyrics.ovh/v1/";
 
 	useEffect(() => {
+		let isMounted = true;
 		const setData = async () => {
 			const lyricsData = await getLyrics(url, artist, title);
-			!lyricsData && setError(true);
-			lyricsData && setLyricsData(lyricsData);
+			if(isMounted) {
+				!lyricsData && setError(true);
+				lyricsData && setLyricsData(lyricsData);
+			}
 		};
 		setData();
+		return () => isMounted = false;
 	}, []);
 
 	const setLyricsData = (data) => {
@@ -86,9 +90,9 @@ export const Game = ({ artist, title, setScoreRecord, scoreRecord }) => {
 			setPrevWord(answer);
 			setIsCorrect(false);
 		}
-		setTimeout(() => {
-			setDisplayResult(null);
-		}, 2500);
+		// setTimeout(() => {
+		// 	setDisplayResult(null);
+		// }, 2500);
 	};
 
 	return (
