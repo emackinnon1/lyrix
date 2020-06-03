@@ -7,7 +7,7 @@ const GameCard = ({ lyrics, updateCount, splitLyric, lyricsCount }) => {
 	const onSubmit = (data) => checkAnswer(data.inputName);
 
 	const checkAnswer = (data) => {
-		console.log('data from onSubmit',data)
+	
 		if(errors.inputName){
 			return
 		}
@@ -38,7 +38,7 @@ const GameCard = ({ lyrics, updateCount, splitLyric, lyricsCount }) => {
 					{splitLyric.splitLine[1]}
 				</div>
 				<div className="check-answers">
-					<input  type="submit" className="check-answers next-btn" value="NEXT"/>
+					<input placeholder='NEXT' type="submit" className="check-answers next-btn" value="NEXT"/>
 				</div>
 			</form>
 				{errors.inputName  && <p>{errors.inputName.message}</p>}
