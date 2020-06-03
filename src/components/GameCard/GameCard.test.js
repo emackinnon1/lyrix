@@ -36,13 +36,17 @@ describe("GameCard", () => {
 				updateCount={mockUpdateCount}
 				splitLyric={splitLyric}
 			/>
-        );
+				);
+				
 		await act(async ()=> {
-            fireEvent.change(getByPlaceholderText("..."), {
+      fireEvent.change(getByPlaceholderText("..."), {
 			target: { value: "Alice" },
 		})});
-        await act(async()=>fireEvent.submit(getByTestId('inputForm')));
-		expect(mockUpdateCount).toHaveBeenCalledWith(true);
+		 
+		await act(async()=> {
+			fireEvent.submit(getByTestId('inputForm'))
+		});
+			expect(mockUpdateCount).toHaveBeenCalledWith(true);
 	});
 
 	it("should not increase score if input word is incorrect", async () => {
@@ -53,14 +57,17 @@ describe("GameCard", () => {
 				splitLyric={splitLyric}
 			/>
 		);
-		act(()=>fireEvent.change(getByPlaceholderText("..."), {
-			target: { value: "Bobby" },
-		}))
-		await act(()=>fireEvent.click(getByText("NEXT")));
-		expect(mockUpdateCount).toHaveBeenCalledWith(
-			false,
-			splitLyric.missing.toUpperCase(),
-			"Bobby"
+		await act(async ()=> {
+			fireEvent.change(getByPlaceholderText("..."), 
+			{ target: { value: "Bobby" },
+		})})
+
+		await act(async ()=> {
+			fireEvent.click(getByText("NEXT"))});
+			expect(mockUpdateCount).toHaveBeenCalledWith(
+				false,
+				splitLyric.missing.toUpperCase(),
+				"Bobby"
 		);
 	});
 });
