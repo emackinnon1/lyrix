@@ -22,9 +22,9 @@
 }
 
 .loading {
-	padding-top: 1em;
 	border-radius: 5px;
-	font-size: 50px;
+	font-size: 3em;
+	display: grid;
 }
 
 .answer-response {
@@ -66,7 +66,7 @@
 	border-bottom: 5px solid #5efc8d;
 	color: black;
 	cursor: pointer;
-	font-size: 30px;
+	font-size: 1.5em;
 	margin: auto;
 	width: 170px;
 	text-decoration: none;

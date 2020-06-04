@@ -123,8 +123,6 @@ describe("App", () => {
     const { getByText } = render(<App />);
 		
 		getLyrics.mockResolvedValueOnce(false);
-    
-		// fireEvent.click(getByText("Play"));
 		
 		const track = await waitFor(() =>
 			getByText("Lady Gaga - rAIn oN mE (with aRIaNa gRAndE)")
