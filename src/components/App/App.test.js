@@ -63,6 +63,7 @@ describe("App", () => {
 		const score = await waitFor(() => getByPlaceholderText("..."));
 
 		expect(score).toBeInTheDocument();
+		fireEvent.click(getByText("Play"));
 	});
 
   it("should be able to input a correct answer", async () => {
@@ -113,7 +114,8 @@ describe("App", () => {
 		await act(async() => {
 			fireEvent.click(inputForm);
 		})
-    expect(getByText('Game Over', { exact: false })).toBeInTheDocument();
+		expect(getByText('Game Over', { exact: false })).toBeInTheDocument();
+		fireEvent.click(getByText("Play"));
 	});
 	
 
@@ -122,7 +124,7 @@ describe("App", () => {
 		
 		getLyrics.mockResolvedValueOnce(false);
     
-		fireEvent.click(getByText("Play"));
+		// fireEvent.click(getByText("Play"));
 		
 		const track = await waitFor(() =>
 			getByText("Lady Gaga - rAIn oN mE (with aRIaNa gRAndE)")

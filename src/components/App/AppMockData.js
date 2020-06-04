@@ -6,5 +6,5 @@ export const tracks = [
 
 export const lyrics = {
 	lyrics:
-		"Open your arms, come and get wet, come and get wet\nThe only certainty we have is that the sun dies at 6 and at 6 it revives\r\n",
+		"Open your arms, come and get wet, come and get wett\r\nThe only certainty we have is that the sun dies at 6 and at 6 it revives\r\n",
 };

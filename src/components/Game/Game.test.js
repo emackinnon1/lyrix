@@ -14,10 +14,16 @@ window.MutationObserver = MutationObserver;
 const mockScoreRecord = ["1/2", "2/2"];
 
 describe("Game", () => {
+	const topTracks = [{
+		artist: "Lady Gaga",
+		favorite: false,
+		songUrl: "https://www.last.fm/music/Lady+Gaga/_/rAIn+oN+mE+(with+aRIaNa+gRAndE)",
+		title: "rAIn oN mE (with aRIaNa gRAndE)"}]
+	
 	it("should fetch lyric data", async () => {
 		getLyrics.mockResolvedValueOnce(lyrics);
 
-		const { getByText } = render(<Game />);
+		const { getByText } = render(<Game artist={topTracks[0].artist} title={topTracks[0].title} topTracks={topTracks} setScoreRecord={jest.fn()}/>);
 
 		const songLyrics = await waitFor(() => getByText("wet", { exact: false }));
 
@@ -28,7 +34,7 @@ describe("Game", () => {
 		getLyrics.mockResolvedValueOnce(lyrics);
 
 		const { getByText, getByPlaceholderText } = render(
-			<Game scoreRecord={mockScoreRecord} setScoreRecord={jest.fn()} />
+			<Game scoreRecord={mockScoreRecord} artist={topTracks[0].artist} title={topTracks[0].title} topTracks={topTracks} setScoreRecord={jest.fn()} />
 		);
 
 		const inputForm = await waitFor(() => getByPlaceholderText("NEXT"));
@@ -69,28 +75,4 @@ describe("Game", () => {
 
 		expect(gameOver).toBeInTheDocument();
 	});
-	// act(async ()=> {
-	//         fireEvent.change(getByPlaceholderText("..."), {
-	// 	target: { value: "Alice" },
-	// })})
-	// act(async()=> await fireEvent.submit(inputForm))
-
-	// act(async ()=> {
-	//         await fireEvent.change(getByPlaceholderText("..."), {
-	// 	target: { value: "Alice" },
-	// })})
-	// act(async()=> await fireEvent.submit(inputForm))
-
-	// act(async ()=> {
-	//         awaitfireEvent.change(getByPlaceholderText("..."), {
-	// 	target: { value: "Alice" },
-	// })})
-	// act(async()=> await fireEvent.submit(inputForm))
-
-	// 	const gameOver = await waitFor(() =>
-	// 		getByText("Game Over", { exact: false })
-	// 	);
-
-	// 	expect(gameOver).toBeInTheDocument();
-	// });
 });
