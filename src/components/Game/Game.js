@@ -17,9 +17,10 @@ export const Game = ({ artist, title, setScoreRecord, scoreRecord, topTracks }) 
 	const [prevWord, setPrevWord] = useState("");
 	const [displayResult, setDisplayResult] = useState(null);
 	const [gameOverMessage, setGameOverMessage] = useState();
-
 	const url = "https://api.lyrics.ovh/v1/";
-	console.log(topTracks)
+	const titleString = title.replace(/\-/g, ' ');
+	const currentSong = topTracks.find(song => song.title == titleString);
+	
 	useEffect(() => {
 		let isMounted = true;
 		const setData = async () => {
@@ -97,8 +98,6 @@ export const Game = ({ artist, title, setScoreRecord, scoreRecord, topTracks }) 
 		// 	setDisplayResult(null);
 		// }, 2500);
 	};
-	const titleString = title.replace(/\-/g, ' ')
-	const currentSong = topTracks.find(song => song.title == titleString)
 	
 	return (
 		<div className="game-container">

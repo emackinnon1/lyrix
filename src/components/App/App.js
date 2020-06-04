@@ -30,6 +30,7 @@ const App = () => {
 			};
 		});
 		setTopTracks(musicInfo);
+		console.log('musicinfo', musicInfo)
 	};  
 
 	const addFavoriteSong = (song) => {
