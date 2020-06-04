@@ -94,9 +94,6 @@ export const Game = ({ artist, title, setScoreRecord, scoreRecord, topTracks }) 
 			setPrevWord(answer);
 			setIsCorrect(false);
 		}
-		// setTimeout(() => {
-		// 	setDisplayResult(null);
-		// }, 2500);
 	};
 	
 	return (
