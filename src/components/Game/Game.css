@@ -27,7 +27,7 @@
 	display: grid;
 }
 
-.answer-response {
+.incorrect-container span {
 	font-size: 1.8vw;
 	color: orange;
 }
@@ -40,7 +40,7 @@
 	color: #5efc8d;
 }
 
-.white {
+.incorrect-container p {
 	color: white;
 	font-size: 1.8vw;
 

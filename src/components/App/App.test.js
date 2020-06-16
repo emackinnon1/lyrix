@@ -11,7 +11,6 @@ import MutationObserver from "@sheerun/mutationobserver-shim";
 window.MutationObserver = MutationObserver;
 
 describe("App", () => {
-
 	beforeEach(() => {
 		getLyrics.mockResolvedValue(lyrics);
 		getChartData.mockResolvedValue(tracks);
@@ -66,74 +65,78 @@ describe("App", () => {
 		fireEvent.click(getByText("Play"));
 	});
 
-  it("should be able to input a correct answer", async () => {
+	it("should be able to input a correct answer", async () => {
 		const { getByText, getByPlaceholderText } = render(<App />);
 
 		fireEvent.click(getByText("Play"));
-		
+
 		const track = await waitFor(() =>
 			getByText("Lady Gaga - rAIn oN mE (with aRIaNa gRAndE)")
 		);
 
 		fireEvent.click(track);
-		
-		const inputForm = await waitFor(() => getByPlaceholderText('NEXT'));
-		let missingWord = await waitFor(()=>getByPlaceholderText('...').id)
-		
-		await act(async()=> {
+
+		const inputForm = await waitFor(() => getByPlaceholderText("NEXT"));
+		let missingWord = await waitFor(() => getByPlaceholderText("...").id);
+
+		await act(async () => {
 			fireEvent.change(getByPlaceholderText("..."), {
-			target: { value: `${missingWord}`},
-		})})
+				target: { value: `${missingWord}` },
+			});
+		});
 
-		await act(async() => {
+		await act(async () => {
 			fireEvent.click(inputForm);
-		})
-		
-		expect(getByText('Correct!')).toBeInTheDocument();
+		});
 
-		missingWord = await waitFor(()=>getByPlaceholderText('...').id)
-		
-		await act(async()=> {
+		expect(getByText("Correct!")).toBeInTheDocument();
+
+		missingWord = await waitFor(() => getByPlaceholderText("...").id);
+
+		await act(async () => {
 			fireEvent.change(getByPlaceholderText("..."), {
-			target: { value: `${missingWord}`},
-		})})
+				target: { value: `${missingWord}` },
+			});
+		});
 
-		expect(getByPlaceholderText('...').value).toEqual(missingWord);
+		expect(getByPlaceholderText("...").value).toEqual(missingWord);
 
-		await act(async() => {
+		await act(async () => {
 			fireEvent.click(inputForm);
-		})
+		});
 
-		expect(getByText('Correct!')).toBeInTheDocument();
+		expect(getByText("Correct!")).toBeInTheDocument();
 
-		await act(async()=> {
+		await act(async () => {
 			fireEvent.change(getByPlaceholderText("..."), {
-			target: { value: 'test'},
-		})})
+				target: { value: "test" },
+			});
+		});
 
-		await act(async() => {
+		await act(async () => {
 			fireEvent.click(inputForm);
-		})
-		expect(getByText('Game Over', { exact: false })).toBeInTheDocument();
+		});
+		expect(getByText("Game Over", { exact: false })).toBeInTheDocument();
 		fireEvent.click(getByText("Play"));
 	});
-	
 
-  it('should advise a player when a song is unavailable', async () => {
-    const { getByText } = render(<App />);
-		
+	it("should advise a player when a song is unavailable", async () => {
+		const { getByText } = render(<App />);
+
 		getLyrics.mockResolvedValueOnce(false);
-		
+
+		fireEvent.click(getByText("Play"));
+
 		const track = await waitFor(() =>
 			getByText("Lady Gaga - rAIn oN mE (with aRIaNa gRAndE)")
-    );
-		
-    fireEvent.click(track);
-		
-    const message = await waitFor(() => 
-       getByText("Please pick a different song.", { exact: false })
-    );
-	
-    expect(message).toBeInTheDocument();
-  });
+		);
+
+		fireEvent.click(track);
+
+		const message = await waitFor(() =>
+			getByText("Please pick a different song.", { exact: false })
+		);
+
+		expect(message).toBeInTheDocument();
+	});
 });
