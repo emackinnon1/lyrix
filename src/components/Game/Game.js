@@ -24,13 +24,13 @@ export const Game = ({ artist, title, setScoreRecord, scoreRecord }) => {
 		let isMounted = true;
 		const setData = async () => {
 			const lyricsData = await getLyrics(url, artist, title);
-			if(isMounted) {
+			if (isMounted) {
 				!lyricsData && setError(true);
 				lyricsData && setLyricsData(lyricsData);
 			}
 		};
 		setData();
-		return () => isMounted = false;
+		return () => (isMounted = false);
 	}, []);
 
 	const setLyricsData = (data) => {
@@ -54,6 +54,8 @@ export const Game = ({ artist, title, setScoreRecord, scoreRecord }) => {
 			return;
 		}
 		const gameLyrics = lyrics.split(" ");
+		console.log("lyrics", lyrics[29] === " ");
+		console.log(gameLyrics[gameLyrics.length - 1][4] === " ");
 		const wordToReplace = Math.floor(Math.random() * gameLyrics.length);
 		const missingWord = gameLyrics[wordToReplace];
 		const firstHalf = gameLyrics.splice(0, wordToReplace).join(" ");
@@ -131,10 +133,13 @@ export const Game = ({ artist, title, setScoreRecord, scoreRecord }) => {
 							<p className="answer-response-correct">Correct!</p>
 						)) || (
 							<div className="incorrect-container">
-								<p className="white">Oops! Your answer: </p>
-								<p className="answer-response">"{currentGuess}"</p>
+								<p>
+									Oops! Your answer: <span>"{currentGuess}"</span>, is wrong.
+									The correct answer is:<span>"{prevWord}"</span>
+								</p>
+								{/* <p className="answer-response">"{currentGuess}"</p>
 								<p className="white">, is wrong. The correct answer is: </p>
-								<p className="answer-response"> "{prevWord}" </p>
+								<p className="answer-response"> "{prevWord}" </p> */}
 							</div>
 						)}
 					</div>
