@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./GameCard.css";
 import { useForm } from "react-hook-form";
 
-const GameCard = ({ lyrics, updateCount, splitLyric, lyricsCount }) => {
+const GameCard = ({ lyrics, updateCount, splitLyric }) => {
 	const { register, handleSubmit, errors, reset } = useForm();
 	const onSubmit = (data) => checkAnswer(data.inputName);
 
@@ -41,7 +41,7 @@ const GameCard = ({ lyrics, updateCount, splitLyric, lyricsCount }) => {
 					<input placeholder='NEXT' type="submit" className="check-answers next-btn" value="NEXT"/>
 				</div>
 			</form>
-				{errors.inputName  && <p>{errors.inputName.message}</p>}
+				{errors.inputName  && <p className='enter-input'>{errors.inputName.message}</p>}
 		</>
 	);
 };

@@ -21,14 +21,16 @@ const App = () => {
 		const musicInfo = songList.map((song) => {
 			const title = song.name;
 			const artist = song.artist.name;
+			const songUrl = song.url
 			return {
 				title,
 				artist,
 				favorite: false,
+				songUrl,
 			};
 		});
-	
 		setTopTracks(musicInfo);
+		console.log('musicinfo', musicInfo)
 	};  
 
 	const addFavoriteSong = (song) => {
@@ -42,12 +44,13 @@ const App = () => {
 		"/play": () => (
 			<Chart songList={topTracks} addFavoriteSong={addFavoriteSong} />
 		),
-		"/play/:artist/:title": ({ artist, title }) => (
+		"/play/:artist/:title": ({ artist, title  }) => (
 			<Game
 				artist={artist}
 				title={title}
 				setScoreRecord={setScoreRecord}
 				scoreRecord={scoreRecord}
+				topTracks={topTracks}
 			/>
 		),
 		"/favorites": () => (

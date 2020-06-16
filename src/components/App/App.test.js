@@ -62,6 +62,7 @@ describe("App", () => {
 		const score = await waitFor(() => getByPlaceholderText("..."));
 
 		expect(score).toBeInTheDocument();
+		fireEvent.click(getByText("Play"));
 	});
 
 	it("should be able to input a correct answer", async () => {
@@ -116,6 +117,7 @@ describe("App", () => {
 			fireEvent.click(inputForm);
 		});
 		expect(getByText("Game Over", { exact: false })).toBeInTheDocument();
+		fireEvent.click(getByText("Play"));
 	});
 
 	it("should advise a player when a song is unavailable", async () => {

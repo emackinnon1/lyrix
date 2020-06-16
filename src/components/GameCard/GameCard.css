@@ -14,13 +14,15 @@
 } 
 
 .next-btn {
-  font-size: 1.5vw;
+  font-size: 2em;
+  padding: .1em;
   text-align: center;
-	color: #2e3532;
+  color:  #5efc8d;
+  background-color: white;
   border-color: #5efc8d;
   border-width: 5px;
   border-radius: 5px;
-  margin-bottom: 5%;
+  margin-top: 3%;
 }
 
 .next-btn:focus {
@@ -28,6 +30,10 @@
 }
 
 .game-txt {
-  font-size: 2vw;
+  font-size: 2em;
+  width: auto;
+}
 
+.enter-input {
+  margin: 0;
 }

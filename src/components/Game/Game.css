@@ -22,17 +22,17 @@
 }
 
 .loading {
-	height: 25vh;
-	width: 80vw;
-	display: flex;
-	flex-direction: column;
 	border-radius: 5px;
-	font-size: 50px;
+	font-size: 3em;
+	display: grid;
 }
 
 .incorrect-container span {
 	font-size: 1.8vw;
 	color: orange;
+}
+.answer-response p {
+	padding-left: 10px;
 }
 
 .answer-response-correct {
@@ -43,29 +43,45 @@
 .incorrect-container p {
 	color: white;
 	font-size: 1.8vw;
+
 }
 
 .incorrect-container {
 	background: #2e3532;
-	margin-top: 2%;
 	display: flex;
 	justify-content: center;
 	height: 2em;
 }
+
 
 .lyrics-main {
 	background-color: white;
 	display: grid;
 	border-radius: 5px;
 	padding: 2em;
+	height: 30vh;
 }
 
 .btn {
 	border-bottom: 5px solid #5efc8d;
 	color: black;
 	cursor: pointer;
-	font-size: 30px;
+	font-size: 0.5em;
 	margin: auto;
 	width: 170px;
 	text-decoration: none;
+}
+.song-link {
+	background-color: #2e3532;
+	padding-bottom: 2em;
+}
+
+.link {
+	color: white;
+	font-size: 2em;
+}
+
+.link:hover {
+	color:  #5efc8d;
+	font-size: 2em;
 }

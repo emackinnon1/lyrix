@@ -1,3 +1,7 @@
+h1 {
+	margin: .3em;
+}
+
 .navlink-holder {
 	display: flex;
 	flex-direction: row;
