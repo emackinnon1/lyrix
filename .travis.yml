@@ -1,5 +1,10 @@
 language: node_js
 node_js:
-  - "node"
+  - node
 notifications:
   email: false
+deploy:
+  api_key:
+    secure: O7zRRbnNubXt47iikqpIB4lV1yKJjbVkot3y0p/27AjG5BkljY8L562vMknFbcCzr2ZI6nCnfTDQJ7+T0SRt+g5XWd8S2KSUnv/Jg0oWHuwT8QBrVD62KrEttdRQw7SJhxYiVU/EIOzaKbIkD4QoCznaLwmnceAXPCcZLeTTdD9auoOBdA1HlWbXDsnPP6f4egjAvy6mfLQBs4qRNajb1+XBz1Y5JToWNDhiPQ9T/UzjSPLzLRACEmplPyHTARICPz8npmuzaXCtIrENUApeeFcfoCFx8MFuuaAWAesRxmwMqGhHQcqQo7hu2ZoAZc2PQUx01ImZi5j9c5enbUM70uWBR35zHtb07O/SFqpeTsl2UYsFkNejI3dvIeE6ajowFZHJ94Tsmutyhd6aC5awFk2EtYFiXSGrwimiaZW/ymfXnEArKQBlKifvxoFO6JLfJ025jaEYJ+EkVsAQT2/D5aYBiAd6UlsuEHyQD6DKgJ11uF1x/wAanVhDOJRR1QULe8OcUR72JH1QjfolIE+5cQFgjN5fnN9ocWoXQF9zC2ApEfB5N1zQSDNZusDoR8hsL+6m138x4m21j1O3SpB/EPg2HJ9krFvxSLJ+oqUiBNRBprBV9jwxfHy99gmJ656KarR2n7Lx2mKb0+BbyH1YrDLXPF3EMs7YEE0Wfsr0DRg=
+  app: lyrix-game
+  skip_cleanup: true
