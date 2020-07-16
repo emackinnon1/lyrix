@@ -8,20 +8,20 @@ import { Game } from "../Game/Game";
 import { About } from "../About/About";
 import { Scores } from "../Scores/Scores";
 import { getChartData } from "../../apiCalls";
-import Favorites  from "../Favorites/Favorites";
+import Favorites from "../Favorites/Favorites";
 
 const App = () => {
 	const [topTracks, setTopTracks] = useState([]);
 	const [scoreRecord, setScoreRecord] = useState([]);
 
 	const lastFmUrl =
-		"http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&limit=10&api_key=ae71028d5b049c13836f15604c505ffa&format=json";
+		"https://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&limit=10&api_key=ae71028d5b049c13836f15604c505ffa&format=json";
 
 	const getArtistsAndTitles = (songList) => {
 		const musicInfo = songList.map((song) => {
 			const title = song.name;
 			const artist = song.artist.name;
-			const songUrl = song.url
+			const songUrl = song.url;
 			return {
 				title,
 				artist,
@@ -30,12 +30,14 @@ const App = () => {
 			};
 		});
 		setTopTracks(musicInfo);
-		console.log('musicinfo', musicInfo)
-	};  
+		console.log("musicinfo", musicInfo);
+	};
 
 	const addFavoriteSong = (song) => {
 		const favLocation = topTracks.indexOf(song);
-		!topTracks[favLocation].favorite ? topTracks[favLocation].favorite = true : topTracks[favLocation].favorite = false;
+		!topTracks[favLocation].favorite
+			? (topTracks[favLocation].favorite = true)
+			: (topTracks[favLocation].favorite = false);
 		setTopTracks([...topTracks]);
 	};
 
@@ -44,7 +46,7 @@ const App = () => {
 		"/play": () => (
 			<Chart songList={topTracks} addFavoriteSong={addFavoriteSong} />
 		),
-		"/play/:artist/:title": ({ artist, title  }) => (
+		"/play/:artist/:title": ({ artist, title }) => (
 			<Game
 				artist={artist}
 				title={title}
@@ -54,7 +56,7 @@ const App = () => {
 			/>
 		),
 		"/favorites": () => (
-			<Favorites addFavoriteSong={addFavoriteSong} songList={topTracks}/>
+			<Favorites addFavoriteSong={addFavoriteSong} songList={topTracks} />
 		),
 		"/scores": () => <Scores scoreRecord={scoreRecord} />,
 	};
@@ -65,7 +67,7 @@ const App = () => {
 			getArtistsAndTitles(chart);
 		};
 		fetchData();
-	},[]);
+	}, []);
 
 	const match = useRoutes(routes);
 
