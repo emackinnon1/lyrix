@@ -1,15 +1,14 @@
 # Lyrix
 
-## Abstract
+## Deployed Site: https://lyrix-game.herokuapp.com/
 
-Lyrix is an application that allows users to test their knowledge of top-charting song lyrics. The user can select a song and try to guess a missing word from a line of lyrics. This application exclusively uses functional React components through the use of hooks.
+## Abstract/Instructions
 
-## Installation Instructions
+Lyrix is an application that allows users to test their knowledge of top-charting song lyrics. The user can select a trending song from the LastFM Charts API and try to guess a missing word from a line of lyrics. We have conveniently linked the playable song, so you simply need to open the link, press play, and start playing! Players can favorite a song and save it for latter, keep track of their current and high scores, and navigate to the "Play" play at any time to pick a different song. 
 
-1. Clone down the repo into your desired folder.
-2. Run: `npm install`
-3. Run: `npm start`
-4. Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
+## Technologies Used: 
+
+This application was built using React hooks and functional components. For routing, we used the Hooks-Router library, and for testing, we used the React Testing Library with Jest as a test runner.
 
 ## Contributors
 
@@ -17,11 +16,6 @@ Lyrix is an application that allows users to test their knowledge of top-chartin
 - [Brian Roxbury](https://github.com/broxbury)
 - [Kyle Williams](https://github.com/KCWill)
 
-## Technologies Used
-
-1. React
-2. Functional components with hooks
-3. React Hook Form Package
 
 ## Composition
 
